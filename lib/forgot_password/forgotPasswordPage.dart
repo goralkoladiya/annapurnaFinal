@@ -174,7 +174,7 @@ class _forgotPasswordPageState extends ConsumerState<forgotPasswordPage> {
                                                 String userid=await PrefUtils.getUserId()??'';
                                                 ref.watch(authenticationProvider).forgotPasswordAPI(
                                                   context: context,
-                                                  userid: userid,
+                                                  userName: UserId.text,
                                                   MobileNumber : MobileNumber.text,
                                                 );
                                               }
