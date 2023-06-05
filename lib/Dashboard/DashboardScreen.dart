@@ -791,6 +791,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                                 "${value[index]["title"]}",
                                 style: boldTextsize6,
                               ),
+
                               SizedBox(
                                 height: 1.h,
                               ),
