@@ -1084,9 +1084,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                           tooltipBehavior: _tooltip,
                           series: <ChartSeries<StatisticsDataDetails, String>>[
                             ColumnSeries<StatisticsDataDetails, String>(
-                                dataSource: (ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails! !=null) ?
+                                dataSource: (ref.watch(dashboardProvider).statisticsDataDetailsModal!=null) ?
                                 ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails! : [],
-
                                 xValueMapper: (StatisticsDataDetails data, _) => (data.mONTHName !=null) ? data.mONTHName as String : "",
                                 dataLabelSettings: DataLabelSettings(textStyle: TextStyle(fontSize: 5),),
                                 yValueMapper: (StatisticsDataDetails data, _) =>
