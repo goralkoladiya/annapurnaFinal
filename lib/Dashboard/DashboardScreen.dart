@@ -100,8 +100,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   List DrawerImage=[];
   String status="FCO";
 
-  getInsight()
-  async {
+  getInsight() async {
     ref.watch(dashboardProvider).InsightAPI(
         context: context,
         UserID:await PrefUtils.getUserId()??"",
@@ -657,9 +656,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   ),
                 )).toList().skip(3).take(3).toList(),
               )
-                  : Container(),
+                  : SizedBox(),
               Container(
-                margin: EdgeInsets.fromLTRB(10, 20, 0, 10),
+                margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
                 child: Row(
                   children: [
                     Text(
@@ -727,7 +726,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(10),
+                margin: EdgeInsets.all(0),
                 height: 28.h,
                 width: 100.h,
                 child: Column(
@@ -737,7 +736,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                       children: [
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
+                          padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               border: Border.all(width: 1, color: bordercolor),
                               color: gray,
@@ -779,7 +778,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                         ),
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
+                          padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               border: Border.all(width: 1, color: bordercolor),
                               color: gray,
@@ -821,7 +820,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                         ),
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
+                          padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               border: Border.all(width: 1, color: bordercolor),
                               color: gray,
@@ -837,7 +836,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                                 height: 1.h,
                               ),
                               Text(
-                                "${value[index]["total"]}",
+                                "${ref.watch(dashboardProvider).dashBoardDetails?.amount3}",
                                 style: boldTextsize8,
                               ),
                               SizedBox(
@@ -867,8 +866,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
+                          // margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               border: Border.all(width: 1, color: bordercolor),
                               color: gray,
@@ -884,7 +883,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                                 height: 1.h,
                               ),
                               Text(
-                                "${value[index]["total"]}",
+                                "${ref.watch(dashboardProvider).dashBoardDetails?.amount4}",
                                 style: boldTextsize8,
                               ),
                               SizedBox(
@@ -909,8 +908,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
+                          // margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               border: Border.all(width: 1, color: bordercolor),
                               color: gray,
@@ -926,7 +925,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                                 height: 1.h,
                               ),
                               Text(
-                                "${value[index]["total"]}",
+                                "${ref.watch(dashboardProvider).dashBoardDetails?.amount5}",
                                 style: boldTextsize8,
                               ),
                               SizedBox(
@@ -951,8 +950,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
+                          // margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               border: Border.all(width: 1, color: bordercolor),
                               color: gray,
@@ -968,7 +967,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                                 height: 1.h,
                               ),
                               Text(
-                                "${value[index]["total"]}",
+                                "${ref.watch(dashboardProvider).dashBoardDetails?.amount6}",
                                 style: boldTextsize8,
                               ),
                               SizedBox(

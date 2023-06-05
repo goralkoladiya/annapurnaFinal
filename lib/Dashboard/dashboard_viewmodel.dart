@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 class DashboardViewModel extends ChangeNotifier {
 // /			"raw": "{\r\n    \"UserID\": \"11229\",\r\n    \"BranchId\": \"HIg\",\r\n    \"BrachName\": \"142\",\r\n    \"Type\": \"MTD\"\r\n}",
   DashBoardDetails? dashBoardDetails;
+
   void InsightAPI({
     required BuildContext context,
      String? UserID,

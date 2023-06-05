@@ -123,7 +123,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                     });
                                   },
                                 ),
-                                Text('Remember Password'),
+                                const Text('Remember Password'),
                                 Spacer(),
                                 TextButton(
                                   onPressed: () {
