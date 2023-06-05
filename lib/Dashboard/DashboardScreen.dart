@@ -17,6 +17,7 @@ import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../components/constants.dart';
 import '../../components/dropdown_widget.dart';
+import '../Modals/StatisticsDataDetails.dart';
 import '../Screens/Fees And Charges/Fees.dart';
 
 
@@ -101,6 +102,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   List DrawerImage=[];
   String status="FCO";
 
+  StatisticsDataDetailsModal? statisticsDataDetailsModal;
+
   getInsight() async {
     ref.watch(dashboardProvider).InsightAPI(
         context: context,
@@ -116,6 +119,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     );
   }
 
+
   @override
   void initState() {
     super.initState();
@@ -123,10 +127,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getInsight();
       statisticsDash();
+
     });
 
     disburData = [
-      DisbursedApplicants('JAN', 12, 10),
+      DisbursedApplicants('JAN', 20, 10),
       DisbursedApplicants('FEB', 15, 20),
       DisbursedApplicants('MAR', 44, 30),
       DisbursedApplicants('APR', 6.4, 5),
@@ -139,6 +144,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
       DisbursedApplicants('NOV', 42, 10),
       DisbursedApplicants('DEC', 27, 10),
     ];
+
 
     _tooltip = TooltipBehavior(enable: true);
     if(status=="FCO")
@@ -768,10 +774,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount1 !=null) ? Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount1}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -810,10 +816,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount2 !=null) ?  Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount2}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -852,10 +858,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount3 !=null) ? Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount3}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -899,10 +905,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount4 !=null) ? Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount4}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -941,10 +947,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount5 !=null) ? Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount5}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -983,10 +989,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount6 != null) ?Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount6}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -1047,13 +1053,13 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                       child: SfCartesianChart(
                           primaryXAxis: CategoryAxis(),
                           primaryYAxis: NumericAxis(
-                              minimum: 50, maximum: 1000, interval: 50),
+                              minimum: 30, maximum: 700, interval: 50),
                           tooltipBehavior: _tooltip,
                           series: <ChartSeries<StatisticsDataDetails, String>>[
                             ColumnSeries<StatisticsDataDetails, String>(
                                 dataSource: ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails!,
-                                xValueMapper: (StatisticsDataDetails data, _) =>
-                                data.mONTHName,
+                                xValueMapper: (StatisticsDataDetails data, _) => data.mONTHName as String,
+                                dataLabelSettings: DataLabelSettings(textStyle: TextStyle(fontSize: 8),),
                                 yValueMapper: (StatisticsDataDetails data, _) =>
                                 int.parse(data.clients!),
                                 name: 'Disbursed Applicants',

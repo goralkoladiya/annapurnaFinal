@@ -38,10 +38,8 @@ class DashboardViewModel extends ChangeNotifier {
       isCustomResponse: true,
       context: context,
       onResponse: (response) {
-        print(response);
         if (response['status'] != false) {
           dashBoardDetails=DashBoardDetails.fromJson(response['DashBoardDetails'][0]);
-          print(dashBoardDetails);
           notifyListeners();
         }else{
 
