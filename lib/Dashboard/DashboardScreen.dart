@@ -1,4 +1,5 @@
 import 'package:annapurna225/HouseHoldCashFlowDetails/HHmonthly.dart';
+import 'package:annapurna225/Modals/StatisticsDataDetails.dart';
 import 'package:annapurna225/Screens/LAF%20Status/LAF%20Search%20Client.dart';
 import 'package:annapurna225/Screens/LUC%20Check/Luccheck.dart';
 import 'package:annapurna225/Screens/New%20Application/Add%20New%20Client/Add%20New%20Client.dart';
@@ -16,6 +17,7 @@ import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../components/constants.dart';
 import '../../components/dropdown_widget.dart';
+import '../Modals/StatisticsDataDetails.dart';
 import '../Screens/Fees And Charges/Fees.dart';
 
 
@@ -100,25 +102,37 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   List DrawerImage=[];
   String status="FCO";
 
-  getInsight()
-  async {
+  StatisticsDataDetailsModal? statisticsDataDetailsModal;
+
+  getInsight() async {
     ref.watch(dashboardProvider).InsightAPI(
         context: context,
         UserID:await PrefUtils.getUserId()??"",
     type:"MTD",
     );
   }
+
+  statisticsDash() async {
+    ref.watch(dashboardProvider).StatisticsDashBoard(
+        context: context,
+        UserID:await PrefUtils.getUserId()??"",
+    );
+  }
+
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     tabController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getInsight();
+      statisticsDash();
+
     });
 
+/*
     disburData = [
-      DisbursedApplicants('JAN', 12, 10),
+      DisbursedApplicants('JAN', 20, 10),
       DisbursedApplicants('FEB', 15, 20),
       DisbursedApplicants('MAR', 44, 30),
       DisbursedApplicants('APR', 6.4, 5),
@@ -131,6 +145,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
       DisbursedApplicants('NOV', 42, 10),
       DisbursedApplicants('DEC', 27, 10),
     ];
+*/
+
 
     _tooltip = TooltipBehavior(enable: true);
     if(status=="FCO")
@@ -760,10 +776,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount1 !=null) ? Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount1}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -802,10 +818,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount2 !=null) ?  Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount2}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -844,10 +860,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount3 !=null) ? Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount3}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -891,10 +907,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount4 !=null) ? Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount4}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -933,10 +949,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount5 !=null) ? Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount5}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -975,10 +991,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                               SizedBox(
                                 height: 1.h,
                               ),
-                              Text(
+                              (ref.watch(dashboardProvider).dashBoardDetails?.amount6 != null) ?Text(
                                 "${ref.watch(dashboardProvider).dashBoardDetails?.amount6}",
                                 style: boldTextsize8,
-                              ),
+                              ) : SizedBox(),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -1037,27 +1053,31 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     Container(
                       height: 25.h,
                       child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(),
+                          primaryXAxis: CategoryAxis(maximum: 12,minimum: 0,),
                           primaryYAxis: NumericAxis(
-                              minimum: 0, maximum: 50, interval: 10),
+                              minimum: 30, maximum: 700, interval: 50),
                           tooltipBehavior: _tooltip,
-                          series: <ChartSeries<DisbursedApplicants, String>>[
-                            ColumnSeries<DisbursedApplicants, String>(
-                                dataSource: disburData,
-                                xValueMapper: (DisbursedApplicants data, _) =>
-                                data.x,
-                                yValueMapper: (DisbursedApplicants data, _) =>
-                                data.y,
+                          series: <ChartSeries<StatisticsDataDetails, String>>[
+                            ColumnSeries<StatisticsDataDetails, String>(
+                                dataSource: (ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails! !=null) ?
+                                ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails! : [],
+
+                                xValueMapper: (StatisticsDataDetails data, _) => (data.mONTHName !=null) ? data.mONTHName as String : "",
+                                dataLabelSettings: DataLabelSettings(textStyle: TextStyle(fontSize: 5),),
+                                yValueMapper: (StatisticsDataDetails data, _) =>
+                                (data.clients! !=null) ? int.parse(data.clients!) : 0,
                                 name: 'Disbursed Applicants',
-                                color: chartColorGreen),
-                            ColumnSeries<DisbursedApplicants, String>(
-                                dataSource: disburData,
-                                xValueMapper: (DisbursedApplicants data, _) =>
-                                data.x,
-                                yValueMapper: (DisbursedApplicants data, _) =>
-                                data.y1,
-                                name: 'Rejected Applications',
-                                color: chartColorOrange),
+                                color: chartColorGreen,
+                            ),
+
+                            // ColumnSeries<StatisticsDataDetails, String>(
+                            //     dataSource: disburData,
+                            //     xValueMapper: (StatisticsDataDetails data, _) =>
+                            //     data.mONTHName,
+                            //     yValueMapper: (StatisticsDataDetails data, _) =>
+                            //     data.y1,
+                            //     name: 'Rejected Applications',
+                            //     color: chartColorOrange),
                           ]),
                     ),
                     Row(
