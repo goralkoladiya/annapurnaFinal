@@ -1,7 +1,7 @@
 class StatisticsDataDetailsModal {
   bool? status;
   String? message;
-  List<StatisticsDataDetailsModal>? statisticsDataDetails;
+  List<StatisticsDataDetails>? statisticsDataDetails;
 
   StatisticsDataDetailsModal(
       {this.status, this.message, this.statisticsDataDetails});
@@ -10,9 +10,9 @@ class StatisticsDataDetailsModal {
     status = json['status'];
     message = json['message'];
     if (json['StatisticsDataDetails'] != null) {
-      statisticsDataDetails = <StatisticsDataDetailsModal>[];
+      statisticsDataDetails = <StatisticsDataDetails>[];
       json['StatisticsDataDetails'].forEach((v) {
-        statisticsDataDetails!.add(new StatisticsDataDetailsModal.fromJson(v));
+        statisticsDataDetails!.add(new StatisticsDataDetails.fromJson(v));
       });
     }
   }
@@ -26,6 +26,11 @@ class StatisticsDataDetailsModal {
           this.statisticsDataDetails!.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'StatisticsDataDetailsModal{status: $status, message: $message, statisticsDataDetails: $statisticsDataDetails}';
   }
 }
 
@@ -45,5 +50,10 @@ class StatisticsDataDetails {
     data['MONTH_Name'] = this.mONTHName;
     data['Clients'] = this.clients;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'StatisticsDataDetails{mONTHName: $mONTHName, clients: $clients}';
   }
 }

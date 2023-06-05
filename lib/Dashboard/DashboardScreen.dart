@@ -1,4 +1,5 @@
 import 'package:annapurna225/HouseHoldCashFlowDetails/HHmonthly.dart';
+import 'package:annapurna225/Modals/StatisticsDataDetails.dart';
 import 'package:annapurna225/Screens/LAF%20Status/LAF%20Search%20Client.dart';
 import 'package:annapurna225/Screens/LUC%20Check/Luccheck.dart';
 import 'package:annapurna225/Screens/New%20Application/Add%20New%20Client/Add%20New%20Client.dart';
@@ -1046,25 +1047,25 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                       child: SfCartesianChart(
                           primaryXAxis: CategoryAxis(),
                           primaryYAxis: NumericAxis(
-                              minimum: 0, maximum: 50, interval: 10),
+                              minimum: 50, maximum: 1000, interval: 50),
                           tooltipBehavior: _tooltip,
-                          series: <ChartSeries<DisbursedApplicants, String>>[
-                            ColumnSeries<DisbursedApplicants, String>(
-                                dataSource: disburData,
-                                xValueMapper: (DisbursedApplicants data, _) =>
-                                data.x,
-                                yValueMapper: (DisbursedApplicants data, _) =>
-                                data.y,
+                          series: <ChartSeries<StatisticsDataDetails, String>>[
+                            ColumnSeries<StatisticsDataDetails, String>(
+                                dataSource: ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails!,
+                                xValueMapper: (StatisticsDataDetails data, _) =>
+                                data.mONTHName,
+                                yValueMapper: (StatisticsDataDetails data, _) =>
+                                int.parse(data.clients!),
                                 name: 'Disbursed Applicants',
                                 color: chartColorGreen),
-                            ColumnSeries<DisbursedApplicants, String>(
-                                dataSource: disburData,
-                                xValueMapper: (DisbursedApplicants data, _) =>
-                                data.x,
-                                yValueMapper: (DisbursedApplicants data, _) =>
-                                data.y1,
-                                name: 'Rejected Applications',
-                                color: chartColorOrange),
+                            // ColumnSeries<StatisticsDataDetails, String>(
+                            //     dataSource: disburData,
+                            //     xValueMapper: (StatisticsDataDetails data, _) =>
+                            //     data.mONTHName,
+                            //     yValueMapper: (StatisticsDataDetails data, _) =>
+                            //     data.y1,
+                            //     name: 'Rejected Applications',
+                            //     color: chartColorOrange),
                           ]),
                     ),
                     Row(

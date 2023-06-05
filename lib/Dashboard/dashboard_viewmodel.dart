@@ -70,8 +70,9 @@ class DashboardViewModel extends ChangeNotifier {
       onResponse: (response) {
 
         if (response['status'] != false) {
-          statisticsDataDetailsModal=StatisticsDataDetailsModal.fromJson(response['StatisticsDataDetails']);
+          statisticsDataDetailsModal=StatisticsDataDetailsModal.fromJson(response);
           print("response ::::::: $statisticsDataDetailsModal");
+          notifyListeners();
         }else{
 
           handleApiError(response['message'], context);
