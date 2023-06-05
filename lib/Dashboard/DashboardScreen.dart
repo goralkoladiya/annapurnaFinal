@@ -99,7 +99,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   List DrawerTitle=[];
   List DrawerImage=[];
   String status="FCO";
-
   getInsight()
   async {
     ref.watch(dashboardProvider).InsightAPI(
@@ -519,7 +518,15 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   btnColor: grey.shade100,
                   textColor: grey,
                   borderColor: Colors.grey,
-                  onTap: () {},
+                  onTap: () async {
+
+                    String userid=await PrefUtils.getUserId()??'';
+                    ref.watch(authenticationProvider).logout(
+                      context: context,
+                      userName: userid,
+                    );
+                    }
+
                 ),
                 SizedBox(
                   height: 1.h,
