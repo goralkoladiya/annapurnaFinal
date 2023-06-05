@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:annapurna225/AppImages.dart';
 import 'package:annapurna225/Dashboard/DashboardScreen.dart';
 import 'package:annapurna225/Modals/InsightModal.dart';
+import 'package:annapurna225/Modals/StatisticsDataDetails.dart';
 import 'package:annapurna225/api_factory/api.dart';
 import 'package:annapurna225/api_factory/api_end_points.dart';
 import 'package:annapurna225/api_factory/prefs/pref_utils.dart';
@@ -52,7 +53,7 @@ class DashboardViewModel extends ChangeNotifier {
     );
   }
 
-
+  StatisticsDataDetailsModal? statisticsDataDetailsModal;
   void StatisticsDashBoard({
     required BuildContext context,
     String? UserID,
@@ -69,7 +70,8 @@ class DashboardViewModel extends ChangeNotifier {
       onResponse: (response) {
 
         if (response['status'] != false) {
-          print("response ::::::: $response");
+          statisticsDataDetailsModal=StatisticsDataDetailsModal.fromJson(response['StatisticsDataDetails']);
+          print("response ::::::: $statisticsDataDetailsModal");
         }else{
 
           handleApiError(response['message'], context);
