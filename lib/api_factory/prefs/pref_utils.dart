@@ -49,6 +49,7 @@ class PrefUtils {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.setString(PrefKeys.user, userData);
   }
+
   static setPassword(String userData) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.setString(PrefKeys.password, userData);
@@ -56,6 +57,14 @@ class PrefUtils {
   static setUserid(String userData) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.setString(PrefKeys.userid, userData);
+  }
+  static setisLogout(bool isLogout) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(PrefKeys.isLogout, isLogout);
+  }
+  static Future<bool?> getisLogout() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getBool(PrefKeys.isLogout);
   }
   static Future<String?> getPassword() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

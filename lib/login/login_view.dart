@@ -29,6 +29,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
+
         autovalidateMode: AutovalidateMode.onUserInteraction,
         onChanged: () => setState(() => _enableBtn = _formKey.currentState!.validate()),
         key: _formKey,

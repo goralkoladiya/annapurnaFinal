@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:annapurna225/AppImages.dart';
 import 'package:annapurna225/Dashboard/DashboardScreen.dart';
+import 'package:annapurna225/Screens/SplashScreen.dart';
 import 'package:annapurna225/api_factory/api.dart';
 import 'package:annapurna225/api_factory/api_end_points.dart';
 import 'package:annapurna225/api_factory/prefs/pref_utils.dart';
 import 'package:annapurna225/api_factory/user_model.dart';
 import 'package:annapurna225/common_webview.dart';
+import 'package:annapurna225/components/dialog.dart';
 import 'package:annapurna225/login/login_view.dart';
 import 'package:annapurna225/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +30,7 @@ class AuthenticationViewModel extends ChangeNotifier {
       "Password": password,
       "MACID":"451236786",
       "Version":"4.0",
-      "Flag":"C"
+      "Flag":"B"
     };
     Api.request(
       method: HttpMethod.post,
@@ -43,7 +46,6 @@ class AuthenticationViewModel extends ChangeNotifier {
           PrefUtils.setUserid(userName);
           PrefUtils.setPassword(password);
           PrefUtils.setToken(response['data']['token']);
-
 
           Navigator.pushReplacement(
               context,
@@ -62,14 +64,57 @@ class AuthenticationViewModel extends ChangeNotifier {
     );
   }
 
-  void changePasswordAPI({
+
+  void forgotPasswordAPI({
     required BuildContext context,
     required String userid,
+    required String MobileNumber,
+
+  }) {
+    var params = {
+      "UserID": userid,
+      "MoblieNumber": MobileNumber,
+
+    };
+    Api.request(
+      method: HttpMethod.post,
+      path: ApiEndPoints.ForgotPassword,
+      params: params,
+      isCustomResponse: true,
+      context: context,
+      onResponse: (response) {
+
+        print(response);
+        if (response['status'] != false) {
+          showSuccessSnackbar(response['Message'], context);
+
+          PrefUtils.setUserid(userid);
+          PrefUtils.setMobileNumber(MobileNumber);
+          PrefUtils.clearPrefs();
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return LoginView();
+                },
+              ));
+        }else{
+
+          handleApiError(response['message'], context);
+
+        }
+
+      },
+    );
+  }
+
+  void changePasswordAPI({
+    required BuildContext context,
+    required String userName,
     required String OldPassword,
     required String NewPassword,
   }) {
     var params = {
-      "UserID": userid,
+      "UserID": userName,
       "OldPassword": OldPassword,
       "NewPassword":NewPassword,
     };
@@ -161,47 +206,6 @@ class AuthenticationViewModel extends ChangeNotifier {
     );
   }
 
-  void forgotPasswordAPI({
-    required BuildContext context,
-    required String userName,
-    required String MobileNumber,
-
-  }) {
-    var params = {
-      "UserID": userName,
-      "MoblieNumber": MobileNumber,
-
-    };
-    Api.request(
-      method: HttpMethod.post,
-      path: ApiEndPoints.ForgotPassword,
-      params: params,
-      isCustomResponse: true,
-      context: context,
-      onResponse: (response) {
-
-        print(response);
-        if (response['status'] != false) {
-          showSuccessSnackbar(response['Message'], context);
-
-          PrefUtils.setUserid(userName);
-          PrefUtils.setMobileNumber(MobileNumber);
-          PrefUtils.clearPrefs();
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return LoginView();
-                },
-              ));
-        }else{
-
-          handleApiError(response['message'], context);
-
-        }
-
-      },
-    );
-  }
 
   void logout({
     required BuildContext context,
@@ -217,6 +221,26 @@ class AuthenticationViewModel extends ChangeNotifier {
       isCustomResponse: true,
       context: context,
       onResponse: (response) {
+        print(response);
+
+        if (response['status'] != false) {
+          PrefUtils.setisLogout(true);
+          PrefUtils.setUserid(userName);
+          PrefUtils.clearPrefs();
+
+          showSuccessSnackbar(response['message'], context);
+
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return SplashScreen();
+                },
+              ));
+        }else{
+
+          handleApiError(response['message'], context);
+
+        }
 
 
       },
