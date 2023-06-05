@@ -169,7 +169,7 @@ class _changePasswordState extends ConsumerState<changePassword> {
                                      String userid=await PrefUtils.getUserId()??'';
                                      ref.watch(authenticationProvider).changePasswordAPI(
                                        context: context,
-                                       userid:userid,
+                                       userName: userid,
                                        OldPassword: oldpass.text,
                                        NewPassword: newpass.text,
                                      );

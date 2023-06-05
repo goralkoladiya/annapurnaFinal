@@ -67,12 +67,12 @@ class AuthenticationViewModel extends ChangeNotifier {
 
   void forgotPasswordAPI({
     required BuildContext context,
-    required String userid,
+    required String userName,
     required String MobileNumber,
 
   }) {
     var params = {
-      "UserID": userid,
+      "UserID": userName,
       "MoblieNumber": MobileNumber,
 
     };
@@ -88,7 +88,7 @@ class AuthenticationViewModel extends ChangeNotifier {
         if (response['status'] != false) {
           showSuccessSnackbar(response['Message'], context);
 
-          PrefUtils.setUserid(userid);
+          PrefUtils.setUserid(userName);
           PrefUtils.setMobileNumber(MobileNumber);
           PrefUtils.clearPrefs();
           Navigator.pushReplacement(context,
