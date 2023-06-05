@@ -31,6 +31,14 @@ class PrefUtils {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.setBool(PrefKeys.isLoggedIn, isLoggedIn);
   }
+  static setMobileNumber(String userData) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.setString(PrefKeys.MoblieNumber, userData);
+  }
+  static Future<String?> getMobileNumber() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(PrefKeys.MoblieNumber);
+  }
 
   static Future<bool?> getIsLoggedIn() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

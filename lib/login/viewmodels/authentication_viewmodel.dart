@@ -58,6 +58,50 @@ class AuthenticationViewModel extends ChangeNotifier {
       },
     );
   }
+
+
+  void forgotPasswordAPI({
+    required BuildContext context,
+    required String userid,
+    required String MobileNumber,
+
+  }) {
+    var params = {
+      "UserID": userid,
+      "MoblieNumber": MobileNumber,
+
+    };
+    Api.request(
+      method: HttpMethod.post,
+      path: ApiEndPoints.ForgotPassword,
+      params: params,
+      isCustomResponse: true,
+      context: context,
+      onResponse: (response) {
+
+        print(response);
+        if (response['status'] != false) {
+          showSuccessSnackbar(response['Message'], context);
+
+          PrefUtils.setUserid(userid);
+          PrefUtils.setMobileNumber(MobileNumber);
+          PrefUtils.clearPrefs();
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return LoginView();
+                },
+              ));
+        }else{
+
+          handleApiError(response['message'], context);
+
+        }
+
+      },
+    );
+  }
+
   void changePasswordAPI({
     required BuildContext context,
     required String userid,
