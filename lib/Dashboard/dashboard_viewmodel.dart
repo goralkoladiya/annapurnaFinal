@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 
 
 class DashboardViewModel extends ChangeNotifier {
-// /			"raw": "{\r\n    \"UserID\": \"11229\",\r\n    \"BranchId\": \"HIg\",\r\n    \"BrachName\": \"142\",\r\n    \"Type\": \"MTD\"\r\n}",
+
   DashBoardDetails? dashBoardDetails;
 
   void InsightAPI({
@@ -42,6 +42,34 @@ class DashboardViewModel extends ChangeNotifier {
           dashBoardDetails=DashBoardDetails.fromJson(response['DashBoardDetails'][0]);
           print(dashBoardDetails);
           notifyListeners();
+        }else{
+
+          handleApiError(response['message'], context);
+
+        }
+
+      },
+    );
+  }
+
+
+  void StatisticsDashBoard({
+    required BuildContext context,
+    String? UserID,
+  }) {
+    var params = {
+      "UserID": UserID,
+    };
+    Api.request(
+      method: HttpMethod.post,
+      path: ApiEndPoints.statisticsDashBoard,
+      params: params,
+      isCustomResponse: true,
+      context: context,
+      onResponse: (response) {
+
+        if (response['status'] != false) {
+          print("response ::::::: $response");
         }else{
 
           handleApiError(response['message'], context);

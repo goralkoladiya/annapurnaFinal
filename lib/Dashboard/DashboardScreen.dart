@@ -100,21 +100,28 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   List DrawerImage=[];
   String status="FCO";
 
-  getInsight()
-  async {
+  getInsight() async {
     ref.watch(dashboardProvider).InsightAPI(
         context: context,
         UserID:await PrefUtils.getUserId()??"",
     type:"MTD",
     );
   }
+
+  statisticsDash() async {
+    ref.watch(dashboardProvider).StatisticsDashBoard(
+        context: context,
+        UserID:await PrefUtils.getUserId()??"",
+    );
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     tabController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getInsight();
+      statisticsDash();
     });
 
     disburData = [

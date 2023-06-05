@@ -5,4 +5,5 @@ class ApiEndPoints {
   static const String userDetail = "UserDetail";
   static const String logout = "logout";
   static const String dashboard = "DashBoard";
+  static const String statisticsDashBoard = "StatisticsDashBoard";
 }
