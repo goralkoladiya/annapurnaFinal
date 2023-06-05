@@ -14,6 +14,9 @@ import 'package:annapurna225/login/login_view.dart';
 import 'package:annapurna225/utils/utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../AppImages.dart';
+import '../../components/dialog.dart';
+
 
 class AuthenticationViewModel extends ChangeNotifier {
 
@@ -64,12 +67,12 @@ class AuthenticationViewModel extends ChangeNotifier {
 
   void forgotPasswordAPI({
     required BuildContext context,
-    required String userName,
+    required String userid,
     required String MobileNumber,
 
   }) {
     var params = {
-      "UserID": userName,
+      "UserID": userid,
       "MoblieNumber": MobileNumber,
 
     };
@@ -85,7 +88,7 @@ class AuthenticationViewModel extends ChangeNotifier {
         if (response['status'] != false) {
           showSuccessSnackbar(response['Message'], context);
 
-          PrefUtils.setUserid(userName);
+          PrefUtils.setUserid(userid);
           PrefUtils.setMobileNumber(MobileNumber);
           PrefUtils.clearPrefs();
           Navigator.pushReplacement(context,
@@ -206,11 +209,10 @@ class AuthenticationViewModel extends ChangeNotifier {
 
   void logout({
     required BuildContext context,
-    required String userName,
-
+    required String userName
   }) {
     var params = {
-      "UserID": userName,
+      "UserId": userName,
     };
     Api.request(
       method: HttpMethod.post,
