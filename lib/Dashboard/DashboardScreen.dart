@@ -130,6 +130,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
 
     });
 
+/*
     disburData = [
       DisbursedApplicants('JAN', 20, 10),
       DisbursedApplicants('FEB', 15, 20),
@@ -144,6 +145,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
       DisbursedApplicants('NOV', 42, 10),
       DisbursedApplicants('DEC', 27, 10),
     ];
+*/
 
 
     _tooltip = TooltipBehavior(enable: true);
@@ -1051,19 +1053,23 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     Container(
                       height: 25.h,
                       child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(),
+                          primaryXAxis: CategoryAxis(maximum: 12,minimum: 0,),
                           primaryYAxis: NumericAxis(
                               minimum: 30, maximum: 700, interval: 50),
                           tooltipBehavior: _tooltip,
                           series: <ChartSeries<StatisticsDataDetails, String>>[
                             ColumnSeries<StatisticsDataDetails, String>(
-                                dataSource: ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails!,
-                                xValueMapper: (StatisticsDataDetails data, _) => data.mONTHName as String,
-                                dataLabelSettings: DataLabelSettings(textStyle: TextStyle(fontSize: 8),),
+                                dataSource: (ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails! !=null) ?
+                                ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails! : [],
+
+                                xValueMapper: (StatisticsDataDetails data, _) => (data.mONTHName !=null) ? data.mONTHName as String : "",
+                                dataLabelSettings: DataLabelSettings(textStyle: TextStyle(fontSize: 5),),
                                 yValueMapper: (StatisticsDataDetails data, _) =>
-                                int.parse(data.clients!),
+                                (data.clients! !=null) ? int.parse(data.clients!) : 0,
                                 name: 'Disbursed Applicants',
-                                color: chartColorGreen),
+                                color: chartColorGreen,
+                            ),
+
                             // ColumnSeries<StatisticsDataDetails, String>(
                             //     dataSource: disburData,
                             //     xValueMapper: (StatisticsDataDetails data, _) =>
