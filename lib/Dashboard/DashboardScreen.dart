@@ -5,10 +5,13 @@ import 'package:annapurna225/Screens/New%20Application/Add%20New%20Client/Add%20
 import 'package:annapurna225/Screens/New%20Application/Search%20%20Client.dart';
 import 'package:annapurna225/Screens/OCR%20Screen/Add%20Client/Add%20Client.dart';
 import 'package:annapurna225/Screens/Village%20Capture/Get%20Location.dart';
+import 'package:annapurna225/api_factory/prefs/pref_utils.dart';
 import 'package:annapurna225/change_password/changePassword.dart';
 import 'package:annapurna225/components/TextBtnWidget.dart';
 import 'package:annapurna225/help/helpPage.dart';
+import 'package:annapurna225/notifier/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../components/constants.dart';
@@ -16,14 +19,14 @@ import '../../components/dropdown_widget.dart';
 import '../Screens/Fees And Charges/Fees.dart';
 
 
-class DashboardPage extends StatefulWidget {
+class DashboardPage extends ConsumerStatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  ConsumerState<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage>
+class _DashboardPageState extends ConsumerState<DashboardPage>
     with TickerProviderStateMixin {
   bool isExpanded = false;
   TabController? tabController;
@@ -97,11 +100,22 @@ class _DashboardPageState extends State<DashboardPage>
   List DrawerImage=[];
   String status="FCO";
 
+  getInsight()
+  async {
+    ref.watch(dashboardProvider).InsightAPI(
+        context: context,
+        UserID:await PrefUtils.getUserId()??"",
+    type:"MTD",
+    );
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tabController = TabController(length: 3, vsync: this);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      getInsight();
+    });
 
     disburData = [
       DisbursedApplicants('JAN', 12, 10),
@@ -661,23 +675,52 @@ class _DashboardPageState extends State<DashboardPage>
                     ),
                     Spacer(),
                     Container(
-                        width: 41.w,
+                        width: 45.w,
                         child: TabBar(
+                          onTap: (value) async {
+                            String userid=await PrefUtils.getUserId() ?? "";
+                            if(value==0)
+                              {
+
+                                ref.watch(dashboardProvider).InsightAPI(
+                                  context: context,
+                                  UserID:userid,
+                                  type:"MTD",
+                                );
+                              }
+                            if(value==1)
+                              {
+                                ref.watch(dashboardProvider).InsightAPI(
+                                  context: context,
+                                  UserID:userid,
+                                  type:"QTD",
+                                );
+                              }
+                            if(value==2)
+                              {
+                                ref.watch(dashboardProvider).InsightAPI(
+                                  context: context,
+                                  UserID:userid,
+                                  type:"YTD",
+                                );
+                              }
+                          },
                             indicatorSize: TabBarIndicatorSize.label,
                             indicatorColor: indicatorColor,
                             controller: tabController,
+                            labelStyle: boldText,
+                            labelColor: kPrimaryColor,
+                            unselectedLabelColor: Colors.black,
                             tabs: [
-                              Text(
-                                "MTD",
-                                style: boldText,
+                              Tab(
+                                text: "MTD",
                               ),
-                              Text(
-                                "QTD",
-                                style: boldText,
+                              Tab(
+                               text: "QTD",
+
                               ),
-                              Text(
-                                "YTD",
-                                style: boldText,
+                              Tab(
+                               text: "YTD",
                               )
                             ]))
                   ],
@@ -687,57 +730,271 @@ class _DashboardPageState extends State<DashboardPage>
                 margin: EdgeInsets.all(10),
                 height: 28.h,
                 width: 100.h,
-                child: GridView.builder(
-                  itemCount: value.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 1.15,
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8),
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: bordercolor),
-                          color: gray,
-                          borderRadius: BorderRadius.circular(7)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${value[index]["title"]}",
-                            style: boldTextsize6,
-                          ),
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          Text(
-                            "${value[index]["total"]}",
-                            style: boldTextsize8,
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Row(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: bordercolor),
+                              color: gray,
+                              borderRadius: BorderRadius.circular(7)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Amount:",
-                                style: TextStyle(fontSize: 7.sp),
+                                "${value[index]["title"]}",
+                                style: boldTextsize6,
+                              ),
+                              SizedBox(
+                                height: 1.h,
                               ),
                               Text(
-                                " Rs. ${value[index]["amount"]}",
-                                style: TextStyle(
-                                    fontSize: 7.sp,
-                                    color: indicatorColor,
-                                    fontWeight: FontWeight.w600),
+                                "${ref.watch(dashboardProvider).dashBoardDetails?.amount1}",
+                                style: boldTextsize8,
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Amount:",
+                                    style: TextStyle(fontSize: 7.sp),
+                                  ),
+                                  Text(
+                                    " Rs. ${value[index]["amount"]}",
+                                    style: TextStyle(
+                                        fontSize: 7.sp,
+                                        color: indicatorColor,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ],
                               )
                             ],
-                          )
-                        ],
-                      ),
-                    );
-                  },
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: bordercolor),
+                              color: gray,
+                              borderRadius: BorderRadius.circular(7)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${value[index]["title"]}",
+                                style: boldTextsize6,
+                              ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Text(
+                                "${ref.watch(dashboardProvider).dashBoardDetails?.amount2}",
+                                style: boldTextsize8,
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Amount:",
+                                    style: TextStyle(fontSize: 7.sp),
+                                  ),
+                                  Text(
+                                    " Rs. ${value[index]["amount"]}",
+                                    style: TextStyle(
+                                        fontSize: 7.sp,
+                                        color: indicatorColor,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: bordercolor),
+                              color: gray,
+                              borderRadius: BorderRadius.circular(7)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${value[index]["title"]}",
+                                style: boldTextsize6,
+                              ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Text(
+                                "${value[index]["total"]}",
+                                style: boldTextsize8,
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Amount:",
+                                    style: TextStyle(fontSize: 7.sp),
+                                  ),
+                                  Text(
+                                    " Rs. ${value[index]["amount"]}",
+                                    style: TextStyle(
+                                        fontSize: 7.sp,
+                                        color: indicatorColor,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: bordercolor),
+                              color: gray,
+                              borderRadius: BorderRadius.circular(7)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${value[index]["title"]}",
+                                style: boldTextsize6,
+                              ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Text(
+                                "${value[index]["total"]}",
+                                style: boldTextsize8,
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Amount:",
+                                    style: TextStyle(fontSize: 7.sp),
+                                  ),
+                                  Text(
+                                    " Rs. ${value[index]["amount"]}",
+                                    style: TextStyle(
+                                        fontSize: 7.sp,
+                                        color: indicatorColor,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: bordercolor),
+                              color: gray,
+                              borderRadius: BorderRadius.circular(7)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${value[index]["title"]}",
+                                style: boldTextsize6,
+                              ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Text(
+                                "${value[index]["total"]}",
+                                style: boldTextsize8,
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Amount:",
+                                    style: TextStyle(fontSize: 7.sp),
+                                  ),
+                                  Text(
+                                    " Rs. ${value[index]["amount"]}",
+                                    style: TextStyle(
+                                        fontSize: 7.sp,
+                                        color: indicatorColor,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: bordercolor),
+                              color: gray,
+                              borderRadius: BorderRadius.circular(7)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${value[index]["title"]}",
+                                style: boldTextsize6,
+                              ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Text(
+                                "${value[index]["total"]}",
+                                style: boldTextsize8,
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Amount:",
+                                    style: TextStyle(fontSize: 7.sp),
+                                  ),
+                                  Text(
+                                    " Rs. ${value[index]["amount"]}",
+                                    style: TextStyle(
+                                        fontSize: 7.sp,
+                                        color: indicatorColor,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
               Container(

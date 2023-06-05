@@ -119,7 +119,8 @@ myDialogOtp(BuildContext context,String image,message,btname,press,btname2,press
     );
   },);
 }
-myDialog3(BuildContext context,String image,String text,String buttonText,double height,double width){
+myDialog3(BuildContext context,String image,String text,String buttonText,double height,double width,
+    {press}){
   showDialog(context: context, builder: (context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -140,9 +141,7 @@ myDialog3(BuildContext context,String image,String text,String buttonText,double
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: defaultPadding,right: defaultPadding),
-                    child: OutlinedButton(onPressed: () {
-                      Navigator.pop(context);
-                    }, child: Text("${buttonText}",style: TextStyle(color: kPrimaryColor),)),
+                    child: OutlinedButton(onPressed: press, child: Text("${buttonText}",style: TextStyle(color: kPrimaryColor),)),
                   ),
                 ),
               ],

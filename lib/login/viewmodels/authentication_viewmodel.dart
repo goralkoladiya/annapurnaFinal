@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:annapurna225/AppImages.dart';
 import 'package:annapurna225/Dashboard/DashboardScreen.dart';
 import 'package:annapurna225/api_factory/api.dart';
 import 'package:annapurna225/api_factory/api_end_points.dart';
 import 'package:annapurna225/api_factory/prefs/pref_utils.dart';
 import 'package:annapurna225/api_factory/user_model.dart';
 import 'package:annapurna225/common_webview.dart';
+import 'package:annapurna225/components/dialog.dart';
 import 'package:annapurna225/login/login_view.dart';
 import 'package:annapurna225/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +26,7 @@ class AuthenticationViewModel extends ChangeNotifier {
       "Password": password,
       "MACID":"451236786",
       "Version":"4.0",
-      "Flag":"C"
+      "Flag":"B"
     };
     Api.request(
       method: HttpMethod.post,
@@ -40,7 +42,6 @@ class AuthenticationViewModel extends ChangeNotifier {
           PrefUtils.setUserid(userName);
           PrefUtils.setPassword(password);
           PrefUtils.setToken(response['data']['token']);
-
 
           Navigator.pushReplacement(
               context,
@@ -123,14 +124,22 @@ class AuthenticationViewModel extends ChangeNotifier {
 
         print(response);
         if (response['status'] != false) {
-          showSuccessSnackbar(response['ChangePasswordData'][0]['Message'], context);
-          PrefUtils.clearPrefs();
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return LoginView();
-                },
-              ));
+          double theight=MediaQuery.of(context).size.height;
+          double twidth=MediaQuery.of(context).size.width;
+          double statusbar=MediaQuery.of(context).padding.top;
+          double navbar=MediaQuery.of(context).padding.bottom;
+          double bheight=theight-statusbar-navbar;
+          // showSuccessSnackbar(response['ChangePasswordData'][0]['Message'], context);
+          myDialog3(context, AppImages.done, "Password Changed Successfully","Okay", bheight*0.4, twidth*0.4,press: (){
+            PrefUtils.clearPrefs();
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return LoginView();
+                  },
+                ));
+          });
+
         }else{
 
           handleApiError(response['message'], context);

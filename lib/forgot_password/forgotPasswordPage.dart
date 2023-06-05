@@ -114,7 +114,6 @@ class _forgotPasswordPageState extends ConsumerState<forgotPasswordPage> {
                                                 myDialog3(context, AppImages.done, "OTP Sent Successfully!","Okay", bheight*0.4, twidth*0.4);
                                                 setState(() {
                                                   otpText=Strings.resendOTP;
-
                                                 });
                                               },)
                                           ],

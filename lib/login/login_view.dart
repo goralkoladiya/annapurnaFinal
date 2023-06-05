@@ -2,8 +2,10 @@ import 'package:annapurna225/AppImages.dart';
 import 'package:annapurna225/Dashboard/DashboardScreen.dart';
 import 'package:annapurna225/change_password/changePassword.dart';
 import 'package:annapurna225/common_webview.dart';
+import 'package:annapurna225/components/constants.dart';
 import 'package:annapurna225/forgot_password/forgotPasswordPage.dart';
 import 'package:annapurna225/notifier/providers.dart';
+import 'package:annapurna225/utils/utils.dart';
 import 'package:annapurna225/widgets/ab_button.dart';
 import 'package:annapurna225/widgets/ab_text_input.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         onChanged: () => setState(() => _enableBtn = _formKey.currentState!.validate()),
         key: _formKey,
         child: SizedBox(
@@ -113,6 +116,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                               children: [
                                 Checkbox(
                                   value: _checkbox,
+                                  activeColor: kPrimaryColor,
                                   onChanged: (value) {
                                     setState(() {
                                       _checkbox = !_checkbox;
@@ -144,11 +148,19 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                   () {
                                 if (_formKey.currentState!.validate()) {
                                   FocusManager.instance.primaryFocus?.unfocus();
-                                  ref.watch(authenticationProvider).loginAPI(
-                                    context: context,
-                                    userName: _userNameController.text,
-                                    password: _passwordController.text,
-                                  );
+                                  if(_checkbox)
+                                    {
+                                      ref.watch(authenticationProvider).loginAPI(
+                                        context: context,
+                                        userName: _userNameController.text,
+                                        password: _passwordController.text,
+                                      );
+                                    }
+                                  else
+                                    {
+                                      handleApiError("Check Remember Password", context);
+                                    }
+
                                 }
                               }:null,
                             )

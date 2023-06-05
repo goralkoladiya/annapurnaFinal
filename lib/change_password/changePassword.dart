@@ -1,6 +1,7 @@
 import 'package:annapurna225/AppImages.dart';
 import 'package:annapurna225/api_factory/prefs/pref_utils.dart';
 import 'package:annapurna225/components/dialog.dart';
+import 'package:annapurna225/utils/utils.dart';
 import 'package:annapurna225/widgets/ab_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,7 +20,10 @@ class _changePasswordState extends ConsumerState<changePassword> {
   TextEditingController newpass=TextEditingController();
   TextEditingController confirmpass=TextEditingController();
   bool isObsecure = true;
+  bool isObsecure2 = true;
+  bool isObsecure3 = true;
   final _formKey = GlobalKey<FormState>();
+  bool _enableBtn = false;
   @override
   Widget build(BuildContext context) {
     double theight=MediaQuery.of(context).size.height;
@@ -29,6 +33,7 @@ class _changePasswordState extends ConsumerState<changePassword> {
     double bheight=theight-statusbar-navbar;
     return Scaffold(
       body: Form(
+        onChanged: () => setState(() => _enableBtn = _formKey.currentState!.validate()),
         key: _formKey,
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -77,6 +82,7 @@ class _changePasswordState extends ConsumerState<changePassword> {
                               ),
                             ),
                             ABTextInput(
+                              controller: oldpass,
                               autoValidator: AutovalidateMode.onUserInteraction,
                               titleText: 'Old Password',
                               validator: (value) {
@@ -99,6 +105,7 @@ class _changePasswordState extends ConsumerState<changePassword> {
                               ),
                             ),
                             ABTextInput(
+                              controller: newpass,
                               autoValidator: AutovalidateMode.onUserInteraction,
                               titleText: 'New Password',
                               validator: (value) {
@@ -107,20 +114,21 @@ class _changePasswordState extends ConsumerState<changePassword> {
                                 }
                                 return null;
                               },
-                              isPassword: isObsecure,
+                              isPassword: isObsecure2,
                               suffix: IconButton(
-                                icon: Icon(isObsecure
+                                icon: Icon(isObsecure2
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined),
                                 onPressed: () {
                                   setState(() {
-                                    isObsecure = !isObsecure;
+                                    isObsecure2 = !isObsecure2;
                                   });
                                 },
                               ),
                               hintText: 'Enter New Password',
                             ),
                             ABTextInput(
+                              controller: confirmpass,
                               autoValidator: AutovalidateMode.onUserInteraction,
                               titleText: 'Confirm Password',
                               validator: (val) {
@@ -130,14 +138,14 @@ class _changePasswordState extends ConsumerState<changePassword> {
                                 return null;
                               },
                               hintText: 'Enter New Password',
-                              isPassword: isObsecure,
+                              isPassword: isObsecure3,
                               suffix: IconButton(
-                                icon: Icon(isObsecure
+                                icon: Icon(isObsecure3
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined),
                                 onPressed: () {
                                   setState(() {
-                                    isObsecure = !isObsecure;
+                                    isObsecure3 = !isObsecure3;
                                   });
                                 },
                               ),
@@ -149,16 +157,23 @@ class _changePasswordState extends ConsumerState<changePassword> {
                               paddingLeft: 16.0,
                               paddingRight: 16.0,
                               text: 'Update',
-                              onPressed: () async {
+                              onPressed: _enableBtn?() async {
                                 if (_formKey.currentState!.validate()) {
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                  String userid=await PrefUtils.getUserId()??'';
-                                  ref.watch(authenticationProvider).changePasswordAPI(
-                                    context: context,
-                                    userid:userid,
-                                    OldPassword: oldpass.text,
-                                    NewPassword: newpass.text,
-                                  );
+                                 if(newpass.text!=confirmpass.text)
+                                   {
+                                     handleApiError("New Password and Confirm Password should be same", context);
+                                   }
+                                 else
+                                   {
+                                     FocusManager.instance.primaryFocus?.unfocus();
+                                     String userid=await PrefUtils.getUserId()??'';
+                                     ref.watch(authenticationProvider).changePasswordAPI(
+                                       context: context,
+                                       userid:userid,
+                                       OldPassword: oldpass.text,
+                                       NewPassword: newpass.text,
+                                     );
+                                   }
                                 }
                                 // myDialog3(context, AppImages.done, "Password Changed Successfully","Okay", bheight*0.4, twidth*0.4);
                                 // Navigator.pushReplacement(
@@ -171,7 +186,7 @@ class _changePasswordState extends ConsumerState<changePassword> {
                                 //   userName: _userNameController.text,
                                 //   password: _passwordController.text,
                                 // );
-                              },
+                              }:null,
                             )
                           ],
                         )),
