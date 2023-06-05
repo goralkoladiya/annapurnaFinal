@@ -10,6 +10,7 @@ import 'package:annapurna225/api_factory/prefs/pref_utils.dart';
 import 'package:annapurna225/api_factory/user_model.dart';
 import 'package:annapurna225/common_webview.dart';
 import 'package:annapurna225/components/dialog.dart';
+import 'package:annapurna225/help/helpPage.dart';
 import 'package:annapurna225/login/login_view.dart';
 import 'package:annapurna225/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -86,11 +87,59 @@ class AuthenticationViewModel extends ChangeNotifier {
 
         print(response);
         if (response['status'] != false) {
-          showSuccessSnackbar(response['Message'], context);
+          showSuccessSnackbar(response['message'], context);
 
           PrefUtils.setUserid(userName);
           PrefUtils.setMobileNumber(MobileNumber);
           PrefUtils.clearPrefs();
+          Navigator.pop(context);
+          // Navigator.pushReplacement(context,
+          //     MaterialPageRoute(
+          //       builder: (context) {
+          //         return LoginView();
+          //       },
+          //     ));
+        }else{
+
+          handleApiError(response['message'], context);
+
+        }
+
+      },
+    );
+  }
+
+  void OTPVerificationAPI({
+    required BuildContext context,
+    required String userName,
+    required String Phoneno,
+    required String OTPNO,
+
+  }) {
+    var params = {
+      "UserID": userName,
+      "MoblieNumber": Phoneno,
+      "OTPNO" : OTPNO,
+
+    };
+    Api.request(
+      method: HttpMethod.post,
+      path: ApiEndPoints.OTP,
+      params: params,
+      isCustomResponse: true,
+      context: context,
+      onResponse: (response) {
+
+        print(response);
+        if (response['status'] != false) {
+          showSuccessSnackbar(response['message'], context);
+
+          PrefUtils.setUserid(userName);
+          PrefUtils.setMobileNumber(Phoneno);
+          PrefUtils.setOTP(OTPNO);
+
+          PrefUtils.clearPrefs();
+          // Navigator.pop(context);
           Navigator.pushReplacement(context,
               MaterialPageRoute(
                 builder: (context) {
@@ -206,8 +255,90 @@ class AuthenticationViewModel extends ChangeNotifier {
     );
   }
 
+  void FAQAPI({
+    required BuildContext context,
+    required String userName,
+    required String UserRole,
 
-  void logout({
+  }) {
+    var params = {
+      "UserID": userName,
+      "UserRole": UserRole,
+    };
+    Api.request(
+      method: HttpMethod.post,
+      path: ApiEndPoints.FAQ,
+      params: params,
+      isCustomResponse: true,
+      context: context,
+      onResponse: (response) {
+
+        print(response);
+        if (response['status'] != false) {
+
+          print(response);
+          showSuccessSnackbar(response['message'], context);
+          PrefUtils.setUserid(userName);
+
+          // Navigator.pushReplacement(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => helpPage(),
+          //     ));
+
+        }else{
+
+          handleApiError(response['message'], context);
+
+        }
+
+      },
+    );
+  }
+
+  void contactAPI({
+    required BuildContext context,
+    required String userName,
+    required String UserRole,
+
+  }) {
+    var params = {
+      "UserID": userName,
+      "UserRole": UserRole,
+    };
+    Api.request(
+      method: HttpMethod.post,
+      path: ApiEndPoints.contact,
+      params: params,
+      isCustomResponse: true,
+      context: context,
+      onResponse: (response) {
+
+        print(response);
+        if (response['status'] != false) {
+
+          print(response);
+          showSuccessSnackbar(response['message'], context);
+          PrefUtils.setUserid(userName);
+
+          // Navigator.pushReplacement(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => helpPage(),
+          //     ));
+
+        }else{
+
+          handleApiError(response['message'], context);
+
+        }
+
+      },
+    );
+  }
+
+
+  void logoutAPI({
     required BuildContext context,
     required String userName
   }) {
@@ -233,7 +364,7 @@ class AuthenticationViewModel extends ChangeNotifier {
           Navigator.pushReplacement(context,
               MaterialPageRoute(
                 builder: (context) {
-                  return SplashScreen();
+                  return LoginView();
                 },
               ));
         }else{

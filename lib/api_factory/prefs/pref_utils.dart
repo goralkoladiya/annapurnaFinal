@@ -35,6 +35,15 @@ class PrefUtils {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.setString(PrefKeys.MoblieNumber, userData);
   }
+  static setOTP(String OTP) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.setString(PrefKeys.OTP, OTP);
+  }
+  static Future<String?> getOTP() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(PrefKeys.OTP);
+  }
+
   static Future<String?> getMobileNumber() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(PrefKeys.MoblieNumber);

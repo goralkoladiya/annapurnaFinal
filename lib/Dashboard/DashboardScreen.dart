@@ -112,6 +112,15 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     );
   }
 
+  contactApicall() async {
+    String userid=await PrefUtils.getUserId()??'';
+    ref.watch(authenticationProvider).contactAPI(
+      context: context,
+      userName:userid,
+      UserRole: "",
+    );
+  }
+
   statisticsDash() async {
     ref.watch(dashboardProvider).StatisticsDashBoard(
         context: context,
@@ -183,7 +192,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   onPressed: () {
                     Scaffold.of(context).openDrawer();
                   },
-                  icon: ImageIcon(AssetImage("assets/dasboardimg/Hamburger.png")),
+                  icon: ImageIcon(AssetImage("assets/dasboardimg/Hamburger.png")
+    ),
                 ),
               ),
           ),
@@ -222,6 +232,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     showDialog(
                       context: context,
                       builder: (context) {
+                        contactApicall();
+
                         return AlertDialog(
                           content: SizedBox(
                             height: 36.h,
@@ -352,14 +364,27 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                         )
                       ],
                     )),
-                const PopupMenuItem(
+                 PopupMenuItem(
                     value: 2,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "FAQs",
-                          style: TextStyle(fontWeight: FontWeight.w500),
+                        InkWell(
+                          onTap: () async {
+                            get = false;
+                            pos=7;
+                            // list[pos];
+                            print("FAQ" );
+
+                            setState(() {
+
+                            });
+                          },
+
+                          child: Text(
+                            "FAQs",
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
                         ),
                         Icon(
                           Icons.arrow_forward_ios,
@@ -538,7 +563,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   onTap: () async {
 
                     String userid=await PrefUtils.getUserId()??'';
-                    ref.watch(authenticationProvider).logout(
+                    ref.watch(authenticationProvider).logoutAPI(
                       context: context,
                       userName: userid,
                     );
@@ -1053,7 +1078,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     Container(
                       height: 25.h,
                       child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(maximum: 12,minimum: 0,),
+                          primaryXAxis: CategoryAxis(maximumLabels: 12,),
                           primaryYAxis: NumericAxis(
                               minimum: 30, maximum: 700, interval: 50),
                           tooltipBehavior: _tooltip,

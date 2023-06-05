@@ -8,6 +8,8 @@ class PrefKeys {
   static const String isLogout = "isLoggedout";
 
   static const String MoblieNumber = "MoblieNumber";
-
+  static const String OTP = "OTP";
+  static const String FAQ = "FAQ";
+  static const String contact = "contact";
 
 }

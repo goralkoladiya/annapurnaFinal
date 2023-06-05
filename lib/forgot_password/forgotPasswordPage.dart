@@ -23,6 +23,9 @@ class _forgotPasswordPageState extends ConsumerState<forgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController UserId = TextEditingController();
   TextEditingController MobileNumber = TextEditingController();
+  OtpFieldController  OTP= OtpFieldController();
+
+
   String otpText=Strings.sendOTP;
   bool kvisible=false;
   @override
@@ -108,14 +111,23 @@ class _forgotPasswordPageState extends ConsumerState<forgotPasswordPage> {
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.end,
                                           children: [
-                                            InkWell(
+                                            InkWell(onTap: () async {
+                                              if (_formKey.currentState!.validate()) {
+                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                String userid=await PrefUtils.getUserId()??'';
+                                                ref.watch(authenticationProvider).forgotPasswordAPI(
+                                                  context: context,
+                                                  userName: userid,
+                                                  MobileNumber : MobileNumber.text,
+                                                );
+                                              }
+                                              myDialog3(context, AppImages.done, "OTP Sent Successfully!","Okay", bheight*0.4, twidth*0.4);
+                                              setState(() {
+                                                otpText=Strings.resendOTP;
+                                              });
+                                             },
                                               child: Text(otpText,style: TextStyle(decoration: TextDecoration.underline,color: kPrimaryColor),),
-                                              onTap: () {
-                                                myDialog3(context, AppImages.done, "OTP Sent Successfully!","Okay", bheight*0.4, twidth*0.4);
-                                                setState(() {
-                                                  otpText=Strings.resendOTP;
-                                                });
-                                              },)
+                                            )
                                           ],
                                         ),
                                       ),
@@ -131,6 +143,8 @@ class _forgotPasswordPageState extends ConsumerState<forgotPasswordPage> {
                                       Padding( padding: EdgeInsets.only(left: defaultPadding),child: InkWell(child: Text("OTP",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),)),),
                                       SizedBox(height: bheight*0.01,),
                                       OTPTextField(
+
+                                        controller: OTP,
                                         margin: EdgeInsets.symmetric(horizontal: 1),
                                         // contentPadding: ,
                                         length: 6,
@@ -141,7 +155,20 @@ class _forgotPasswordPageState extends ConsumerState<forgotPasswordPage> {
                                         ),
                                         textFieldAlignment: MainAxisAlignment.center,
                                         fieldStyle: FieldStyle.box,
-                                        onCompleted: (pin) {
+                                        onCompleted: (pin) async {
+
+                                          if (_formKey.currentState!.validate()) {
+                                            FocusManager.instance.primaryFocus?.unfocus();
+                                            String userid=await PrefUtils.getUserId()??'';
+                                            ref.watch(authenticationProvider).OTPVerificationAPI(
+                                              context: context,
+                                              Phoneno : MobileNumber.text,
+                                              userName: userid,
+                                              OTPNO : "078783",
+
+
+                                            );
+                                          }
                                           print("Completed: " + pin);
                                         },
                                       ),
@@ -158,6 +185,7 @@ class _forgotPasswordPageState extends ConsumerState<forgotPasswordPage> {
                                                 style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
                                                 onPressed: () {
 
+
                                                 }, child: Text("Verify & Next")),
                                           ),
                                         ],
@@ -169,15 +197,7 @@ class _forgotPasswordPageState extends ConsumerState<forgotPasswordPage> {
                                                 side: BorderSide(color: Colors.deepPurple,width: 2)
                                             ),
                                             onPressed: () async {
-                                              if (_formKey.currentState!.validate()) {
-                                                FocusManager.instance.primaryFocus?.unfocus();
-                                                String userid=await PrefUtils.getUserId()??'';
-                                                ref.watch(authenticationProvider).forgotPasswordAPI(
-                                                  context: context,
-                                                  userName: userid,
-                                                  MobileNumber : MobileNumber.text,
-                                                );
-                                              }
+
                                               Navigator.push(context, MaterialPageRoute(builder: (context) => LoginView(),));
                                             },
                                             child: Text("Back to Login",style: TextStyle(color: Colors.deepPurple)),
