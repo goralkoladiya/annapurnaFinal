@@ -38,8 +38,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   late List<DisbursedApplicants> data;
   late TooltipBehavior _tooltip;
   final _formKey = GlobalKey<FormState>();
-
-
   List AODrawerTitle = [
     "Review",
     "LAF Status",
