@@ -5,18 +5,20 @@ import 'package:annapurna225/Screens/New%20Application/Add%20New%20Client/Add%20
 import 'package:annapurna225/Screens/New%20Application/Search%20%20Client.dart';
 import 'package:annapurna225/Screens/OCR%20Screen/Add%20Client/Add%20Client.dart';
 import 'package:annapurna225/Screens/Village%20Capture/Get%20Location.dart';
-import 'package:annapurna225/api_factory/prefs/pref_utils.dart';
 import 'package:annapurna225/change_password/changePassword.dart';
 import 'package:annapurna225/components/TextBtnWidget.dart';
 import 'package:annapurna225/help/helpPage.dart';
-import 'package:annapurna225/notifier/providers.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../components/constants.dart';
 import '../../components/dropdown_widget.dart';
 import '../Screens/Fees And Charges/Fees.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../api_factory/prefs/pref_utils.dart';
+import '../notifier/providers.dart';
+
 
 
 class DashboardPage extends ConsumerStatefulWidget {
@@ -35,6 +37,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
 
   late List<DisbursedApplicants> data;
   late TooltipBehavior _tooltip;
+  final _formKey = GlobalKey<FormState>();
+
 
   List AODrawerTitle = [
     "Review",
@@ -100,22 +104,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   List DrawerImage=[];
   String status="FCO";
 
-  getInsight()
-  async {
-    ref.watch(dashboardProvider).InsightAPI(
-        context: context,
-        UserID:await PrefUtils.getUserId()??"",
-    type:"MTD",
-    );
-  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tabController = TabController(length: 3, vsync: this);
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      getInsight();
-    });
 
     disburData = [
       DisbursedApplicants('JAN', 12, 10),
@@ -519,7 +512,16 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   btnColor: grey.shade100,
                   textColor: grey,
                   borderColor: Colors.grey,
-                  onTap: () {},
+                  onTap: () async {
+                    if (_formKey.currentState!.validate()) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      String userid=await PrefUtils.getUserId()??'';
+                      ref.watch(authenticationProvider).logout(
+                        context: context,
+                        userName: userid,
+                      );
+                    }
+                  },
                 ),
                 SizedBox(
                   height: 1.h,
@@ -530,564 +532,324 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
           ),
         ),
       ),
-      body: get ? ScrollConfiguration(
-        behavior: MaterialScrollBehavior().copyWith(overscroll: false),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    Text(
-                      "Branch Name: Branch one",
-                      style: boldText,
+      body: get ? Form(
+        key: _formKey,
+        child: ScrollConfiguration(
+          behavior: MaterialScrollBehavior().copyWith(overscroll: false),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Branch Name: Branch one",
+                        style: boldText,
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(left: 5),
+                          height: 2.5.h,
+                          width: 9.h,
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(250, 157, 18, 1),
+                              borderRadius: BorderRadius.circular(2)),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Medium Risk",
+                            style: TextStyle(
+                              color: white,
+                              fontSize: 7.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )),
+                      Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Transaction Date: ",
+                                style: TextStyle(
+                                  fontSize: 6.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Text(
+                                " 09:09:2022",
+                                style: TextStyle(
+                                  fontSize: 6.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Login Date and Time",
+                                style: TextStyle(
+                                  fontSize: 6.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Text(
+                                "10:09:2022, 3:40PM",
+                                style: TextStyle(
+                                  fontSize: 6.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Row(
+                  children: DrawerTitle.asMap().entries.map((e) => Container(
+                    height: 15.h,
+                    width: 100.w / 3,
+                    decoration: BoxDecoration(
+                        color: gray,
+                        border:
+                        Border.all(width: .5, color: Colors.grey.shade300)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset("${DrawerImage[e.key]}"),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Text("${e.value}", style: text600)
+                      ],
                     ),
-                    Container(
-                        margin: EdgeInsets.only(left: 5),
-                        height: 2.5.h,
-                        width: 9.h,
+                  )).toList().take(3).toList(),
+                ),
+                DrawerTitle.length>6? InkWell(
+                  onTap: () {
+                    setState(() {
+                      isExpanded=!isExpanded;
+                    });
+                  },
+                  child: Padding(padding: EdgeInsets.all(defaultPadding),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Image.asset("assets/dots.png",height: 1.h,width: 5.w,),
+                    ),),
+                ):SizedBox(),
+                (isExpanded)?
+                Row(
+                  children: DrawerTitle.asMap().entries.map((e) => Container(
+                    height: 15.h,
+                    width: 100.w / 3,
+                    decoration: BoxDecoration(
+                        color: gray,
+                        border:
+                        Border.all(width: .5, color: Colors.grey.shade300)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset("${DrawerImage[e.key]}"),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Text("${e.value}", style: text600,textAlign: TextAlign.center,)
+                      ],
+                    ),
+                  )).toList().skip(3).take(3).toList(),
+                )
+                    : Container(),
+                Container(
+                  margin: EdgeInsets.fromLTRB(10, 20, 0, 10),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Insights",
+                        style: boldText,
+                      ),
+                      SizedBox(
+                        width: 1.w,
+                      ),
+                      Image.asset(
+                        "assets/dasboardimg/Vector (1).png",
+                        height: 3.w,
+                      ),
+                      Spacer(),
+                      Container(
+                          width: 41.w,
+                          child: TabBar(
+                              indicatorSize: TabBarIndicatorSize.label,
+                              indicatorColor: indicatorColor,
+                              controller: tabController,
+                              tabs: [
+                                Text(
+                                  "MTD",
+                                  style: boldText,
+                                ),
+                                Text(
+                                  "QTD",
+                                  style: boldText,
+                                ),
+                                Text(
+                                  "YTD",
+                                  style: boldText,
+                                )
+                              ]))
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  height: 28.h,
+                  width: 100.h,
+                  child: GridView.builder(
+                    itemCount: value.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 1.15,
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(250, 157, 18, 1),
-                            borderRadius: BorderRadius.circular(2)),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Medium Risk",
-                          style: TextStyle(
-                            color: white,
-                            fontSize: 7.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        )),
-                    Spacer(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
+                            border: Border.all(width: 1, color: bordercolor),
+                            color: gray,
+                            borderRadius: BorderRadius.circular(7)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Transaction Date: ",
-                              style: TextStyle(
-                                fontSize: 6.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
+                              "${value[index]["title"]}",
+                              style: boldTextsize6,
+                            ),
+                            SizedBox(
+                              height: 1.h,
                             ),
                             Text(
-                              " 09:09:2022",
-                              style: TextStyle(
-                                fontSize: 6.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              "${value[index]["total"]}",
+                              style: boldTextsize8,
                             ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Amount:",
+                                  style: TextStyle(fontSize: 7.sp),
+                                ),
+                                Text(
+                                  " Rs. ${value[index]["amount"]}",
+                                  style: TextStyle(
+                                      fontSize: 7.sp,
+                                      color: indicatorColor,
+                                      fontWeight: FontWeight.w600),
+                                )
+                              ],
+                            )
                           ],
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              "Login Date and Time",
-                              style: TextStyle(
-                                fontSize: 6.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Text(
-                              "10:09:2022, 3:40PM",
-                              style: TextStyle(
-                                fontSize: 6.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Row(
-                children: DrawerTitle.asMap().entries.map((e) => Container(
-                  height: 15.h,
-                  width: 100.w / 3,
-                  decoration: BoxDecoration(
-                      color: gray,
-                      border:
-                      Border.all(width: .5, color: Colors.grey.shade300)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset("${DrawerImage[e.key]}"),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      Text("${e.value}", style: text600)
-                    ],
+                      );
+                    },
                   ),
-                )).toList().take(3).toList(),
-              ),
-              DrawerTitle.length>6? InkWell(
-                onTap: () {
-                  setState(() {
-                    isExpanded=!isExpanded;
-                  });
-                },
-                child: Padding(padding: EdgeInsets.all(defaultPadding),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Image.asset("assets/dots.png",height: 1.h,width: 5.w,),
-                  ),),
-              ):SizedBox(),
-              (isExpanded)?
-              Row(
-                children: DrawerTitle.asMap().entries.map((e) => Container(
-                  height: 15.h,
-                  width: 100.w / 3,
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 1.5.h,right: 1.5.h,bottom: 1.5.h),
+                  padding: EdgeInsets.all(1.h),
                   decoration: BoxDecoration(
-                      color: gray,
-                      border:
-                      Border.all(width: .5, color: Colors.grey.shade300)),
+                      color: white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(.5),
+                            offset: Offset(0, 1),
+                            spreadRadius: 1,
+                            blurRadius: 1)
+                      ]),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset("${DrawerImage[e.key]}"),
-                      SizedBox(
-                        height: 1.h,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Statistics",
+                            style: boldTextsize8,
+                          ),
+                          IconButton(
+                              color: indicatorColor,
+                              iconSize: 20,
+                              onPressed: () {},
+                              icon: Icon(Icons.calendar_today_outlined))
+                        ],
                       ),
-                      Text("${e.value}", style: text600,textAlign: TextAlign.center,)
-                    ],
-                  ),
-                )).toList().skip(3).take(3).toList(),
-              )
-                  : Container(),
-              Container(
-                margin: EdgeInsets.fromLTRB(10, 20, 0, 10),
-                child: Row(
-                  children: [
-                    Text(
-                      "Insights",
-                      style: boldText,
-                    ),
-                    SizedBox(
-                      width: 1.w,
-                    ),
-                    Image.asset(
-                      "assets/dasboardimg/Vector (1).png",
-                      height: 3.w,
-                    ),
-                    Spacer(),
-                    Container(
-                        width: 45.w,
-                        child: TabBar(
-                          onTap: (value) async {
-                            String userid=await PrefUtils.getUserId() ?? "";
-                            if(value==0)
-                              {
-
-                                ref.watch(dashboardProvider).InsightAPI(
-                                  context: context,
-                                  UserID:userid,
-                                  type:"MTD",
-                                );
-                              }
-                            if(value==1)
-                              {
-                                ref.watch(dashboardProvider).InsightAPI(
-                                  context: context,
-                                  UserID:userid,
-                                  type:"QTD",
-                                );
-                              }
-                            if(value==2)
-                              {
-                                ref.watch(dashboardProvider).InsightAPI(
-                                  context: context,
-                                  UserID:userid,
-                                  type:"YTD",
-                                );
-                              }
-                          },
-                            indicatorSize: TabBarIndicatorSize.label,
-                            indicatorColor: indicatorColor,
-                            controller: tabController,
-                            labelStyle: boldText,
-                            labelColor: kPrimaryColor,
-                            unselectedLabelColor: Colors.black,
-                            tabs: [
-                              Tab(
-                                text: "MTD",
-                              ),
-                              Tab(
-                               text: "QTD",
-
-                              ),
-                              Tab(
-                               text: "YTD",
-                              )
-                            ]))
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.all(10),
-                height: 28.h,
-                width: 100.h,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: bordercolor),
-                              color: gray,
-                              borderRadius: BorderRadius.circular(7)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${value[index]["title"]}",
-                                style: boldTextsize6,
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              Text(
-                                "${ref.watch(dashboardProvider).dashBoardDetails?.amount1}",
-                                style: boldTextsize8,
-                              ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Amount:",
-                                    style: TextStyle(fontSize: 7.sp),
-                                  ),
-                                  Text(
-                                    " Rs. ${value[index]["amount"]}",
-                                    style: TextStyle(
-                                        fontSize: 7.sp,
-                                        color: indicatorColor,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              )
-                            ],
+                      Container(
+                        height: 25.h,
+                        child: SfCartesianChart(
+                            primaryXAxis: CategoryAxis(),
+                            primaryYAxis: NumericAxis(
+                                minimum: 0, maximum: 50, interval: 10),
+                            tooltipBehavior: _tooltip,
+                            series: <ChartSeries<DisbursedApplicants, String>>[
+                              ColumnSeries<DisbursedApplicants, String>(
+                                  dataSource: disburData,
+                                  xValueMapper: (DisbursedApplicants data, _) =>
+                                  data.x,
+                                  yValueMapper: (DisbursedApplicants data, _) =>
+                                  data.y,
+                                  name: 'Disbursed Applicants',
+                                  color: chartColorGreen),
+                              ColumnSeries<DisbursedApplicants, String>(
+                                  dataSource: disburData,
+                                  xValueMapper: (DisbursedApplicants data, _) =>
+                                  data.x,
+                                  yValueMapper: (DisbursedApplicants data, _) =>
+                                  data.y1,
+                                  name: 'Rejected Applications',
+                                  color: chartColorOrange),
+                            ]),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: 2.h,
+                            width: 2.h,
+                            color: chartColorGreen,
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: bordercolor),
-                              color: gray,
-                              borderRadius: BorderRadius.circular(7)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${value[index]["title"]}",
-                                style: boldTextsize6,
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              Text(
-                                "${ref.watch(dashboardProvider).dashBoardDetails?.amount2}",
-                                style: boldTextsize8,
-                              ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Amount:",
-                                    style: TextStyle(fontSize: 7.sp),
-                                  ),
-                                  Text(
-                                    " Rs. ${value[index]["amount"]}",
-                                    style: TextStyle(
-                                        fontSize: 7.sp,
-                                        color: indicatorColor,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              )
-                            ],
+                          Text(
+                            "Disbursed Applicants",
+                            style: boldTextsize6,
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: bordercolor),
-                              color: gray,
-                              borderRadius: BorderRadius.circular(7)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${value[index]["title"]}",
-                                style: boldTextsize6,
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              Text(
-                                "${value[index]["total"]}",
-                                style: boldTextsize8,
-                              ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Amount:",
-                                    style: TextStyle(fontSize: 7.sp),
-                                  ),
-                                  Text(
-                                    " Rs. ${value[index]["amount"]}",
-                                    style: TextStyle(
-                                        fontSize: 7.sp,
-                                        color: indicatorColor,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              )
-                            ],
+                          Container(
+                            height: 2.h,
+                            width: 2.h,
+                            color: chartColorOrange,
                           ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: bordercolor),
-                              color: gray,
-                              borderRadius: BorderRadius.circular(7)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${value[index]["title"]}",
-                                style: boldTextsize6,
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              Text(
-                                "${value[index]["total"]}",
-                                style: boldTextsize8,
-                              ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Amount:",
-                                    style: TextStyle(fontSize: 7.sp),
-                                  ),
-                                  Text(
-                                    " Rs. ${value[index]["amount"]}",
-                                    style: TextStyle(
-                                        fontSize: 7.sp,
-                                        color: indicatorColor,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              )
-                            ],
+                          Text(
+                            "Rejected Applications",
+                            style: boldTextsize6,
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: bordercolor),
-                              color: gray,
-                              borderRadius: BorderRadius.circular(7)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${value[index]["title"]}",
-                                style: boldTextsize6,
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              Text(
-                                "${value[index]["total"]}",
-                                style: boldTextsize8,
-                              ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Amount:",
-                                    style: TextStyle(fontSize: 7.sp),
-                                  ),
-                                  Text(
-                                    " Rs. ${value[index]["amount"]}",
-                                    style: TextStyle(
-                                        fontSize: 7.sp,
-                                        color: indicatorColor,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: bordercolor),
-                              color: gray,
-                              borderRadius: BorderRadius.circular(7)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${value[index]["title"]}",
-                                style: boldTextsize6,
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              Text(
-                                "${value[index]["total"]}",
-                                style: boldTextsize8,
-                              ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Amount:",
-                                    style: TextStyle(fontSize: 7.sp),
-                                  ),
-                                  Text(
-                                    " Rs. ${value[index]["amount"]}",
-                                    style: TextStyle(
-                                        fontSize: 7.sp,
-                                        color: indicatorColor,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 1.5.h,right: 1.5.h,bottom: 1.5.h),
-                padding: EdgeInsets.all(1.h),
-                decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(.5),
-                          offset: Offset(0, 1),
-                          spreadRadius: 1,
-                          blurRadius: 1)
-                    ]),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Statistics",
-                          style: boldTextsize8,
-                        ),
-                        IconButton(
+                          Container(
+                            height: 2.h,
+                            width: 2.h,
                             color: indicatorColor,
-                            iconSize: 20,
-                            onPressed: () {},
-                            icon: Icon(Icons.calendar_today_outlined))
-                      ],
-                    ),
-                    Container(
-                      height: 25.h,
-                      child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(),
-                          primaryYAxis: NumericAxis(
-                              minimum: 0, maximum: 50, interval: 10),
-                          tooltipBehavior: _tooltip,
-                          series: <ChartSeries<DisbursedApplicants, String>>[
-                            ColumnSeries<DisbursedApplicants, String>(
-                                dataSource: disburData,
-                                xValueMapper: (DisbursedApplicants data, _) =>
-                                data.x,
-                                yValueMapper: (DisbursedApplicants data, _) =>
-                                data.y,
-                                name: 'Disbursed Applicants',
-                                color: chartColorGreen),
-                            ColumnSeries<DisbursedApplicants, String>(
-                                dataSource: disburData,
-                                xValueMapper: (DisbursedApplicants data, _) =>
-                                data.x,
-                                yValueMapper: (DisbursedApplicants data, _) =>
-                                data.y1,
-                                name: 'Rejected Applications',
-                                color: chartColorOrange),
-                          ]),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 2.h,
-                          width: 2.h,
-                          color: chartColorGreen,
-                        ),
-                        Text(
-                          "Disbursed Applicants",
-                          style: boldTextsize6,
-                        ),
-                        Container(
-                          height: 2.h,
-                          width: 2.h,
-                          color: chartColorOrange,
-                        ),
-                        Text(
-                          "Rejected Applications",
-                          style: boldTextsize6,
-                        ),
-                        Container(
-                          height: 2.h,
-                          width: 2.h,
-                          color: indicatorColor,
-                        ),
-                        Text(
-                          "Total Applications",
-                          style: boldTextsize6,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              )
-            ],
+                          ),
+                          Text(
+                            "Total Applications",
+                            style: boldTextsize6,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ):list[pos],
