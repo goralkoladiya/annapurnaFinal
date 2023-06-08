@@ -107,7 +107,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   getInsight() async {
     ref.watch(dashboardProvider).InsightAPI(
         context: context,
-        UserID:await PrefUtils.getUserId()??"",
+        UserID: await PrefUtils.getUserId()??"",
     type:"MTD",
     );
   }
@@ -128,6 +128,31 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     );
   }
 
+  voterIdsearch() async {
+    ref.watch(ocrProvider).VoterIdSearch(
+      context: context,
+      UserID: await PrefUtils.getUserId() ?? "",
+      VoterID: await PrefUtils.getvoterId() ?? "",
+    );
+  }
+  notificationApi() async {
+    String userid=await PrefUtils.getUserId()??'';
+    ref.watch(authenticationProvider).notificationAPI(
+      context: context,
+      userName:userid,
+      UserRole: "",
+    );
+  }
+
+  existingdataAPI() async {
+    String userid=await PrefUtils.getUserId()??'';
+    String mobileNumber=await PrefUtils.getMobileNumber()??'';
+    ref.watch(drawerProvider).existingDataApis(
+      context: context,
+      UserID: userid,
+      MobileNumber: mobileNumber,
+    );
+  }
 
   @override
   void initState() {
@@ -136,26 +161,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getInsight();
       statisticsDash();
-
+      // voterIdsearch();
+      // notificationApi();
+      // existingdataAPI();
     });
-
-/*
-    disburData = [
-      DisbursedApplicants('JAN', 20, 10),
-      DisbursedApplicants('FEB', 15, 20),
-      DisbursedApplicants('MAR', 44, 30),
-      DisbursedApplicants('APR', 6.4, 5),
-      DisbursedApplicants('MAY', 20, 25),
-      DisbursedApplicants('JUN', 14, 10),
-      DisbursedApplicants('JUL', 32, 30),
-      DisbursedApplicants('AUG', 36, 20),
-      DisbursedApplicants('SEP', 25, 10),
-      DisbursedApplicants('OCT', 12, 8),
-      DisbursedApplicants('NOV', 42, 10),
-      DisbursedApplicants('DEC', 27, 10),
-    ];
-*/
-
 
     _tooltip = TooltipBehavior(enable: true);
     if(status=="FCO")
@@ -232,8 +241,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     showDialog(
                       context: context,
                       builder: (context) {
-                        contactApicall();
-
                         return AlertDialog(
                           content: SizedBox(
                             height: 36.h,
@@ -1078,18 +1085,18 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     Container(
                       height: 25.h,
                       child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(maximumLabels: 12,),
+                          primaryXAxis: CategoryAxis(maximumLabels: 12),
                           primaryYAxis: NumericAxis(
                               minimum: 30, maximum: 700, interval: 50),
                           tooltipBehavior: _tooltip,
                           series: <ChartSeries<StatisticsDataDetails, String>>[
                             ColumnSeries<StatisticsDataDetails, String>(
-                                dataSource: (ref.watch(dashboardProvider).statisticsDataDetailsModal!=null) ?
+                                dataSource: (ref.watch(dashboardProvider).statisticsDataDetailsModal !=null) ?
                                 ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails! : [],
                                 xValueMapper: (StatisticsDataDetails data, _) => (data.mONTHName !=null) ? data.mONTHName as String : "",
                                 dataLabelSettings: DataLabelSettings(textStyle: TextStyle(fontSize: 5),),
                                 yValueMapper: (StatisticsDataDetails data, _) =>
-                                (data.clients! !=null) ? int.parse(data.clients!) : 0,
+                                (data.clients !=null) ? int.parse(data.clients!) : 0,
                                 name: 'Disbursed Applicants',
                                 color: chartColorGreen,
                             ),
