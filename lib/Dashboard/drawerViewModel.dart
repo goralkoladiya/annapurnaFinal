@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../Modals/ClientDetailModel.dart';
 import '../Modals/ExistingDataModel.dart';
+import '../Modals/LuckCheckModel.dart';
 import '../api_factory/api.dart';
 import '../api_factory/api_end_points.dart';
 import '../utils/utils.dart';
@@ -46,7 +47,6 @@ class DrawerModels extends ChangeNotifier{
     required String UserID,
     String? UserRole,
     required String MobileNumber,
-
   }) {
     var params = {
       "UserID": UserID,
@@ -75,5 +75,37 @@ class DrawerModels extends ChangeNotifier{
     );
   }
 
+  LuckCheckModel? luckCheckModel;
+  void luckCheckAPI({
+    required BuildContext context,
+    required String UserID,
+     String? UserRole,
+    required String Villageone,
+    required String VCenter,
 
+  }) {
+    var params = {
+      "UserID": UserID,
+      "UserRole": UserRole,
+      "Village": Villageone,
+      "Center": VCenter,
+    };
+    Api.request(
+      method: HttpMethod.post,
+      path: ApiEndPoints.luckCheck,
+      params: params,
+      isCustomResponse: true,
+      context: context,
+      onResponse: (response) {
+        if (response['status'] != false) {
+          showSuccessSnackbar(response['message'], context);
+          luckCheckModel = LuckCheckModel.fromJson(response);
+          print("object ::: $luckCheckModel");
+        }else{
+          handleApiError(response['message'], context);
+        }
+
+      },
+    );
+  }
 }

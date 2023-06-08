@@ -33,11 +33,23 @@ class _GetLocationState extends ConsumerState<GetLocation> {
         pincode: "",
         Village: "");
   }
+
+  LuckCheckApi() async {
+    String userid=await PrefUtils.getUserId()??'';
+    ref.watch(drawerProvider).luckCheckAPI(
+        context: context,
+        UserID: userid,
+        Villageone: '',
+        VCenter: '',
+    );
+  }
+
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
     clientDetailsApi();
+    LuckCheckApi();
   }
   @override
   Widget build(BuildContext context) {

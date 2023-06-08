@@ -14,4 +14,5 @@ class ApiEndPoints {
   static const String clientDetails = "ClientDetails";
   static const String verifyMobileNumber = "VerifyMobileNumber";
   static const String existingData = "ExistingData";
+  static const String luckCheck = "LuckCheck";
 }
