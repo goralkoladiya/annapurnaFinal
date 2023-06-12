@@ -16,6 +16,7 @@ import 'package:annapurna225/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../AppImages.dart';
+import '../../Modals/NotificationModel.dart';
 import '../../components/dialog.dart';
 
 
@@ -114,7 +115,6 @@ class AuthenticationViewModel extends ChangeNotifier {
     required String userName,
     required String Phoneno,
     required String OTPNO,
-
   }) {
     var params = {
       "UserID": userName,
@@ -259,7 +259,6 @@ class AuthenticationViewModel extends ChangeNotifier {
     required BuildContext context,
     required String userName,
     required String UserRole,
-
   }) {
     var params = {
       "UserID": userName,
@@ -278,7 +277,6 @@ class AuthenticationViewModel extends ChangeNotifier {
 
           print(response);
           showSuccessSnackbar(response['message'], context);
-          PrefUtils.setUserid(userName);
 
           // Navigator.pushReplacement(
           //     context,
@@ -319,13 +317,47 @@ class AuthenticationViewModel extends ChangeNotifier {
 
           print(response);
           showSuccessSnackbar(response['message'], context);
-          PrefUtils.setUserid(userName);
 
           // Navigator.pushReplacement(
           //     context,
           //     MaterialPageRoute(
           //       builder: (context) => helpPage(),
           //     ));
+
+        }else{
+
+          handleApiError(response['message'], context);
+
+        }
+
+      },
+    );
+  }
+
+  NotificationModel? notificationModel;
+  void notificationAPI({
+    required BuildContext context,
+    required String userName,
+    required String UserRole,
+
+  }) {
+    var params = {
+      "UserID": userName,
+      "UserRole": UserRole,
+    };
+    Api.request(
+      method: HttpMethod.post,
+      path: ApiEndPoints.notification,
+      params: params,
+      isCustomResponse: true,
+      context: context,
+      onResponse: (response) {
+
+        print(response);
+        if (response['status'] != false) {
+          notificationModel = NotificationModel.fromJson(response);
+          notifyListeners();
+          showSuccessSnackbar(response['message'], context);
 
         }else{
 

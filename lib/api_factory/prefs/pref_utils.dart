@@ -75,6 +75,16 @@ class PrefUtils {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getBool(PrefKeys.isLogout);
   }
+
+  static setvoterId(String VoterID) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setString(PrefKeys.VoterID, VoterID);
+  }
+  static Future<String?> getvoterId() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(PrefKeys.VoterID);
+  }
+
   static Future<String?> getPassword() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(PrefKeys.password);

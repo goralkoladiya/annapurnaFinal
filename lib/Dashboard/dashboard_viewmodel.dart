@@ -44,9 +44,7 @@ class DashboardViewModel extends ChangeNotifier {
         }else{
 
           handleApiError(response['message'], context);
-
         }
-
       },
     );
   }
@@ -69,7 +67,6 @@ class DashboardViewModel extends ChangeNotifier {
 
         if (response['status'] != false) {
           statisticsDataDetailsModal=StatisticsDataDetailsModal.fromJson(response);
-          print("response ::::::: $statisticsDataDetailsModal");
           notifyListeners();
         }else{
 
