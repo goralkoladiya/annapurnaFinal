@@ -61,6 +61,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     "Village Addition",
     "CB Deviation Approval",
     "Fees and Charges",
+    "Review",
+    "GRT",
+    "PD",
     "Notification",
     "Help",
     "Change Password"
@@ -72,6 +75,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     "assets/Drawer/village.png",
     "assets/Drawer/cbDivition.png",
     "assets/Drawer/salary 1.png",
+    "assets/Drawer/newApplication.png",
+    "assets/Drawer/lafStatus.png",
+    "assets/pd.png",
     "assets/Drawer/notification.png",
     "assets/Drawer/help.png",
     "assets/Drawer/chnagepass.png",
@@ -1078,7 +1084,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     Container(
                       height: 25.h,
                       child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(maximumLabels: 12,),
+                          primaryXAxis: CategoryAxis(maximumLabels: 12,labelStyle: TextStyle(fontSize: 7)),
                           primaryYAxis: NumericAxis(
                               minimum: 30, maximum: 700, interval: 50),
                           tooltipBehavior: _tooltip,
