@@ -149,7 +149,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                   () {
                                 if (_formKey.currentState!.validate()) {
                                   FocusManager.instance.primaryFocus?.unfocus();
-                                  if(_checkbox)
+                                  // if(_checkbox)
                                     {
                                       ref.watch(authenticationProvider).loginAPI(
                                         context: context,
@@ -157,10 +157,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                         password: _passwordController.text,
                                       );
                                     }
-                                  else
-                                    {
-                                      handleApiError("Check Remember Password", context);
-                                    }
+                                  // else
+                                  //   {
+                                  //     handleApiError("Check Remember Password", context);
+                                  //   }
 
                                 }
                               }:null,

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:annapurna225/AppImages.dart';
 import 'package:annapurna225/Dashboard/DashboardScreen.dart';
+import 'package:annapurna225/Modals/User.dart';
 import 'package:annapurna225/Screens/SplashScreen.dart';
 import 'package:annapurna225/api_factory/api.dart';
 import 'package:annapurna225/api_factory/api_end_points.dart';
@@ -21,7 +22,7 @@ import '../../components/dialog.dart';
 
 
 class AuthenticationViewModel extends ChangeNotifier {
-
+  User? user;
   void loginAPI({
     required BuildContext context,
     required String userName,
@@ -40,15 +41,19 @@ class AuthenticationViewModel extends ChangeNotifier {
       params: params,
       isCustomResponse: true,
       context: context,
-      onResponse: (response) {
+      onResponse: (response) async {
 
+        print("response=$response");
         if (response['status'] != false) {
           showSuccessSnackbar(response['message'], context);
           PrefUtils.setIsLoggedIn(true);
           PrefUtils.setUserid(userName);
           PrefUtils.setPassword(password);
-          PrefUtils.setToken(response['data']['token']);
-
+          PrefUtils.setUserRole(response['UserRole']);
+          // user=User.fromJson(response);
+          String status=await PrefUtils.getUserRole() ?? 'FCO';
+          print("status=$status");
+          // notifyListeners();
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(

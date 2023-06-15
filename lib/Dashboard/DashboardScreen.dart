@@ -10,6 +10,7 @@ import 'package:annapurna225/api_factory/prefs/pref_utils.dart';
 import 'package:annapurna225/change_password/changePassword.dart';
 import 'package:annapurna225/components/TextBtnWidget.dart';
 import 'package:annapurna225/help/helpPage.dart';
+import 'package:annapurna225/login/login_view.dart';
 import 'package:annapurna225/notifier/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -61,9 +62,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     "Village Addition",
     "CB Deviation Approval",
     "Fees and Charges",
-    "Review",
-    "GRT",
-    "PD",
     "Notification",
     "Help",
     "Change Password"
@@ -75,9 +73,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     "assets/Drawer/village.png",
     "assets/Drawer/cbDivition.png",
     "assets/Drawer/salary 1.png",
-    "assets/Drawer/newApplication.png",
-    "assets/Drawer/lafStatus.png",
-    "assets/pd.png",
     "assets/Drawer/notification.png",
     "assets/Drawer/help.png",
     "assets/Drawer/chnagepass.png",
@@ -94,7 +89,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     "Change Password"
   ];
   List BMDrawerImage = [
-    "assets/Drawer/profiles 1.png",
+    "assets/Drawer/newApplication.png",
     "assets/Drawer/lafStatus.png",
     "assets/pd.png",
     "assets/lafstatus.png",
@@ -134,36 +129,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     );
   }
 
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: 3, vsync: this);
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      getInsight();
-      statisticsDash();
-
-    });
-
-/*
-    disburData = [
-      DisbursedApplicants('JAN', 20, 10),
-      DisbursedApplicants('FEB', 15, 20),
-      DisbursedApplicants('MAR', 44, 30),
-      DisbursedApplicants('APR', 6.4, 5),
-      DisbursedApplicants('MAY', 20, 25),
-      DisbursedApplicants('JUN', 14, 10),
-      DisbursedApplicants('JUL', 32, 30),
-      DisbursedApplicants('AUG', 36, 20),
-      DisbursedApplicants('SEP', 25, 10),
-      DisbursedApplicants('OCT', 12, 8),
-      DisbursedApplicants('NOV', 42, 10),
-      DisbursedApplicants('DEC', 27, 10),
-    ];
-*/
-
-
-    _tooltip = TooltipBehavior(enable: true);
+  getrole() async {
+    status=await PrefUtils.getUserRole() ?? 'FCO';
+    print("status===$status");
     if(status=="FCO")
     {
       DrawerTitle=FCODrawerTitle;
@@ -179,6 +147,21 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
       DrawerTitle=AODrawerTitle;
       DrawerImage=AODrawerImage;
     }
+    setState(() {
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 3, vsync: this);
+    getrole();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      getInsight();
+      statisticsDash();
+
+    });
+    _tooltip = TooltipBehavior(enable: true);
   }
   bool get=true;
   int pos=0;
@@ -448,7 +431,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     Navigator.push(context, MaterialPageRoute(builder: (context) => changePassword(),));
                     break;
                   case 2:
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => Logout(),));
+                    PrefUtils.clearPrefs();
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginView(),));
                     break;
                 }
               },
@@ -679,18 +663,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   ),
                 )).toList().take(3).toList(),
               ),
-              DrawerTitle.length>6? InkWell(
-                onTap: () {
-                  setState(() {
-                    isExpanded=!isExpanded;
-                  });
-                },
-                child: Padding(padding: EdgeInsets.all(defaultPadding),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Image.asset("assets/dots.png",height: 1.h,width: 5.w,),
-                  ),),
-              ):SizedBox(),
               (isExpanded)?
               Row(
                 children: DrawerTitle.asMap().entries.map((e) => Container(
@@ -713,6 +685,18 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                 )).toList().skip(3).take(3).toList(),
               )
                   : SizedBox(),
+              DrawerTitle.length>6? InkWell(
+                onTap: () {
+                  setState(() {
+                    isExpanded=!isExpanded;
+                  });
+                },
+                child: Padding(padding: EdgeInsets.all(defaultPadding),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Image.asset("assets/dots.png",height: 1.h,width: 5.w,),
+                  ),),
+              ):SizedBox(),
               Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
                 child: Row(
