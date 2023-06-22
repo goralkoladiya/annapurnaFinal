@@ -11,7 +11,14 @@ class PrefUtils {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.setString(PrefKeys.token, token);
   }
-
+  static setUserRole(String role) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setString(PrefKeys.role, role);
+  }
+  static Future<String?> getUserRole() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(PrefKeys.role);
+  }
   static Future<String?> getToken() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(PrefKeys.token);
