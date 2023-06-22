@@ -97,6 +97,7 @@ class _forgotPasswordPageState extends ConsumerState<forgotPasswordPage> {
                                       SizedBox(height: bheight*0.01,),
                                       ABTextInput(
                                         textInputType: TextInputType.phone,
+                                        controller: MobileNumber,
                                         autoValidator: AutovalidateMode.onUserInteraction,
                                         titleText: 'Registered Mobile Number',
                                         validator: (value) {
@@ -165,8 +166,6 @@ class _forgotPasswordPageState extends ConsumerState<forgotPasswordPage> {
                                               Phoneno : MobileNumber.text,
                                               userName: userid,
                                               OTPNO : "078783",
-
-
                                             );
                                           }
                                           print("Completed: " + pin);

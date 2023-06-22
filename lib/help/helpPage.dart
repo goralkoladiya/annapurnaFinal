@@ -25,7 +25,7 @@ class _helpPageState extends ConsumerState<helpPage> {
   }
 
   FAQAPICALL() async {
-    String userid=await PrefUtils.getUserId()??'';
+    String userid=await PrefUtils.getUserId() ?? '';
     ref.watch(authenticationProvider).FAQAPI(
       context: context,
       userName:userid,
@@ -38,29 +38,34 @@ class _helpPageState extends ConsumerState<helpPage> {
       backgroundColor: white,
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
-          child: Card(
-        child: Container(
-          child: Column(
-            children: [
-              ExpansionTile(
-                backgroundColor: ThemeColor.expansioncolor,
-                collapsedBackgroundColor: ThemeColor.expansioncolor,
-                textColor: Colors.black87,
-                title: Text(
-                  "What is Lorem Ipsum?",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                children: [
-                  Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                    style: TextStyle(),
+          child: Container(margin: EdgeInsets.all(5),
+            child: Column(
+              children: [
+                ClipRRect(borderRadius: BorderRadius.circular(10),
+                  child: ExpansionTile(
+                    backgroundColor: ThemeColor.expansioncolor,
+                    collapsedBackgroundColor: ThemeColor.expansioncolor,
+                    textColor: Colors.black87,
+                    title: Text(
+                      "What is Lorem Ipsum?",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    children: [
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                            style: TextStyle(),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      )),
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

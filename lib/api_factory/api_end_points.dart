@@ -10,4 +10,9 @@ class ApiEndPoints {
   static const String contact = "contact";
   static const String statisticsDashBoard = "StatisticsDashBoard";
   static const String voterIdSearch = "VoterIdSearch";
+  static const String notification = "Notification";
+  static const String clientDetails = "ClientDetails";
+  static const String verifyMobileNumber = "VerifyMobileNumber";
+  static const String existingData = "ExistingData";
+  static const String luckCheck = "LuckCheck";
 }

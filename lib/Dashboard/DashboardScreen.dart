@@ -1,7 +1,6 @@
 import 'package:annapurna225/HouseHoldCashFlowDetails/HHmonthly.dart';
 import 'package:annapurna225/Modals/StatisticsDataDetails.dart';
 import 'package:annapurna225/Screens/LAF%20Status/LAF%20Search%20Client.dart';
-import 'package:annapurna225/Screens/LUC%20Check/LucSearchClient.dart';
 import 'package:annapurna225/Screens/LUC%20Check/Luccheck.dart';
 import 'package:annapurna225/Screens/New%20Application/Add%20New%20Client/Add%20New%20Client.dart';
 import 'package:annapurna225/Screens/New%20Application/Search%20%20Client.dart';
@@ -11,7 +10,10 @@ import 'package:annapurna225/api_factory/prefs/pref_utils.dart';
 import 'package:annapurna225/change_password/changePassword.dart';
 import 'package:annapurna225/components/TextBtnWidget.dart';
 import 'package:annapurna225/help/helpPage.dart';
+import 'package:annapurna225/login/login_view.dart';
 import 'package:annapurna225/notifier/providers.dart';
+import 'package:annapurna225/ve.client%20details/borrowerDetails.dart';
+import 'package:annapurna225/ve.client%20details/clientList.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sizer/sizer.dart';
@@ -20,6 +22,7 @@ import '../../components/constants.dart';
 import '../../components/dropdown_widget.dart';
 import '../Modals/StatisticsDataDetails.dart';
 import '../Screens/Fees And Charges/Fees.dart';
+import '../cb_daviation_data/cb_daviation_data.dart';
 
 
 class DashboardPage extends ConsumerStatefulWidget {
@@ -89,7 +92,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     "Change Password"
   ];
   List BMDrawerImage = [
-    "assets/Drawer/profiles 1.png",
+    "assets/Drawer/newApplication.png",
     "assets/Drawer/lafStatus.png",
     "assets/pd.png",
     "assets/lafstatus.png",
@@ -129,36 +132,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
     );
   }
 
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: 3, vsync: this);
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      getInsight();
-      statisticsDash();
-
-    });
-
-/*
-    disburData = [
-      DisbursedApplicants('JAN', 20, 10),
-      DisbursedApplicants('FEB', 15, 20),
-      DisbursedApplicants('MAR', 44, 30),
-      DisbursedApplicants('APR', 6.4, 5),
-      DisbursedApplicants('MAY', 20, 25),
-      DisbursedApplicants('JUN', 14, 10),
-      DisbursedApplicants('JUL', 32, 30),
-      DisbursedApplicants('AUG', 36, 20),
-      DisbursedApplicants('SEP', 25, 10),
-      DisbursedApplicants('OCT', 12, 8),
-      DisbursedApplicants('NOV', 42, 10),
-      DisbursedApplicants('DEC', 27, 10),
-    ];
-*/
-
-
-    _tooltip = TooltipBehavior(enable: true);
+  getrole() async {
+    status=await PrefUtils.getUserRole() ?? 'FCO';
+    print("status===$status");
     if(status=="FCO")
     {
       DrawerTitle=FCODrawerTitle;
@@ -174,10 +150,25 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
       DrawerTitle=AODrawerTitle;
       DrawerImage=AODrawerImage;
     }
+    setState(() {
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 3, vsync: this);
+    getrole();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      getInsight();
+      statisticsDash();
+
+    });
+    _tooltip = TooltipBehavior(enable: true);
   }
   bool get=true;
   int pos=0;
-  List<Widget> list=[SearchClient(),LafSearchClient(),LucSearchClient(),GetLocation(),Hhmonthly(),FeesCharges(),AddClient(),helpPage(),changePassword(),];
+  List<Widget> list=[SearchClient(),LafSearchClient(),Luccheck(),GetLocation(),cb_daviation()/*Hhmonthly()*/,FeesCharges(),AddClient(),helpPage(),changePassword()];
 
   @override
   Widget build(BuildContext context) {
@@ -443,7 +434,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     Navigator.push(context, MaterialPageRoute(builder: (context) => changePassword(),));
                     break;
                   case 2:
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => Logout(),));
+                    PrefUtils.clearPrefs();
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginView(),));
                     break;
                 }
               },
@@ -674,18 +666,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   ),
                 )).toList().take(3).toList(),
               ),
-              DrawerTitle.length>6? InkWell(
-                onTap: () {
-                  setState(() {
-                    isExpanded=!isExpanded;
-                  });
-                },
-                child: Padding(padding: EdgeInsets.all(defaultPadding),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Image.asset("assets/dots.png",height: 1.h,width: 5.w,),
-                  ),),
-              ):SizedBox(),
               (isExpanded)?
               Row(
                 children: DrawerTitle.asMap().entries.map((e) => Container(
@@ -708,6 +688,18 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                 )).toList().skip(3).take(3).toList(),
               )
                   : SizedBox(),
+              DrawerTitle.length>6? InkWell(
+                onTap: () {
+                  setState(() {
+                    isExpanded=!isExpanded;
+                  });
+                },
+                child: Padding(padding: EdgeInsets.all(defaultPadding),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Image.asset("assets/dots.png",height: 1.h,width: 5.w,),
+                  ),),
+              ):SizedBox(),
               Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
                 child: Row(
@@ -1079,19 +1071,18 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     Container(
                       height: 25.h,
                       child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(maximumLabels: 12,),
+                          primaryXAxis: CategoryAxis(maximumLabels: 12,labelStyle: TextStyle(fontSize: 7)),
                           primaryYAxis: NumericAxis(
                               minimum: 30, maximum: 700, interval: 50),
                           tooltipBehavior: _tooltip,
                           series: <ChartSeries<StatisticsDataDetails, String>>[
                             ColumnSeries<StatisticsDataDetails, String>(
-                                dataSource: (ref.watch(dashboardProvider).statisticsDataDetailsModal !=null) ?
+                                dataSource: (ref.watch(dashboardProvider).statisticsDataDetailsModal!=null) ?
                                 ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails! : [],
-
                                 xValueMapper: (StatisticsDataDetails data, _) => (data.mONTHName !=null) ? data.mONTHName as String : "",
                                 dataLabelSettings: DataLabelSettings(textStyle: TextStyle(fontSize: 5),),
                                 yValueMapper: (StatisticsDataDetails data, _) =>
-                                (data.clients !=null) ? int.parse(data.clients!) : 0,
+                                (data.clients! !=null) ? int.parse(data.clients!) : 0,
                                 name: 'Disbursed Applicants',
                                 color: chartColorGreen,
                             ),

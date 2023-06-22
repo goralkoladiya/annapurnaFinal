@@ -19,7 +19,7 @@ class _HhmonthlyState extends State<Hhmonthly> {
     return Scaffold(
       backgroundColor: white,
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: white,
         title: Text("Household",overflow: TextOverflow.ellipsis,style: TextStyle(color: black),),
         actions: [
@@ -151,7 +151,7 @@ class _HhmonthlyState extends State<Hhmonthly> {
               onPressed: () {},
               icon: const Icon(Icons.keyboard_arrow_down_rounded,size: 15,))
         ],
-      ),
+      ),*/
       body: Column(
         children: [
           Padding(

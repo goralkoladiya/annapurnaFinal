@@ -4,24 +4,53 @@ import 'package:annapurna225/Screens/Village%20Capture/Village%20Addition.dart';
 import 'package:annapurna225/components/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sizer/sizer.dart';
+import '../../api_factory/prefs/pref_utils.dart';
 import '../../components/TextBtnWidget.dart';
 import '../../components/constants.dart';
+import '../../notifier/providers.dart';
 
-class GetLocation extends StatefulWidget {
+class GetLocation extends ConsumerStatefulWidget {
   const GetLocation({Key? key}) : super(key: key);
 
   @override
-  State<GetLocation> createState() => _GetLocationState();
+  ConsumerState<GetLocation> createState() => _GetLocationState();
 }
 
-class _GetLocationState extends State<GetLocation> {
+class _GetLocationState extends ConsumerState<GetLocation> {
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   static const LatLng _center = const LatLng(45.521563, -122.677433);
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
 
+  clientDetailsApi() async {
+    String userid=await PrefUtils.getUserId()??'';
+    ref.watch(drawerProvider).clientDetailsAPI(
+        context: context,
+        UserID: userid,
+        pincode: "",
+        Village: "");
+  }
+
+  LuckCheckApi() async {
+    String userid=await PrefUtils.getUserId()??'';
+    ref.watch(drawerProvider).luckCheckAPI(
+        context: context,
+        UserID: userid,
+        Villageone: '',
+        VCenter: '',
+    );
+  }
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    clientDetailsApi();
+    LuckCheckApi();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -403,7 +432,7 @@ class _GetLocationState extends State<GetLocation> {
           ),
 
           Expanded(child: Container(margin: EdgeInsets.all(10),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.grey),
             child:  GoogleMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(

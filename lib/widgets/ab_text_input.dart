@@ -14,6 +14,7 @@ class ABTextInput extends StatelessWidget {
   final Widget? prefix, suffix;
   final Color? iserror;
   final int? maxLength;
+  final Color? iserror;
   final int? minLength;
   final Function()? onTap;
   final bool? isPassword, countryCodeEnabled, isEnabled;
@@ -43,6 +44,7 @@ class ABTextInput extends StatelessWidget {
       this.prefixText,
       this.prefix,
       this.labelText,
+      this.iserror,
       this.titleText,
       this.hintText,
       this.suffix,
@@ -102,17 +104,23 @@ class ABTextInput extends StatelessWidget {
             decoration: InputDecoration(
               errorStyle: const TextStyle(fontSize: 11, height: 1.0),
               enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Color(0xff9aa4b0),
+                borderSide:  BorderSide(
+                  color: iserror ??Color(0xff9aa4b0),
                 ),
                 borderRadius: BorderRadius.circular(7),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color:kPrimaryColor,
+                borderSide:  BorderSide(
+                  color: iserror ?? kPrimaryColor,
                 ),
                 borderRadius: BorderRadius.circular(7),
               ),
+              focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: iserror ?? Colors.red,
+                  ),
+                  borderRadius: BorderRadius.circular(7),
+                ),
               contentPadding: const EdgeInsets.all(12),
               hintText: hintText,
               hintStyle: TextStyle(

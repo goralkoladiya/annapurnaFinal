@@ -1,24 +1,27 @@
 import 'package:annapurna225/components/TextFieldWidget.dart';
 import 'package:annapurna225/components/dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../AppImages.dart';
+import '../../api_factory/prefs/pref_utils.dart';
 import '../../components/constants.dart';
 import '../../components/dropdown_widget.dart';
+import '../../notifier/providers.dart';
 import '../../widgets/ab_button.dart';
 import '../../widgets/ab_text_input.dart';
 import '../OCR Screen/Add Client/CaptureImage.dart';
 import 'Update Mobile.dart';
 
-class VerifyMobileNo extends StatefulWidget {
+class VerifyMobileNo extends ConsumerStatefulWidget {
   const VerifyMobileNo({Key? key}) : super(key: key);
 
   @override
-  State<VerifyMobileNo> createState() => _VerifyMobileNoState();
+  ConsumerState<VerifyMobileNo> createState() => _VerifyMobileNoState();
 }
 
-class _VerifyMobileNoState extends State<VerifyMobileNo> {
+class _VerifyMobileNoState extends ConsumerState<VerifyMobileNo> {
   final _userNameController = TextEditingController();
   TextEditingController mobile = TextEditingController();
   TextEditingController relation = TextEditingController();
@@ -28,6 +31,23 @@ class _VerifyMobileNoState extends State<VerifyMobileNo> {
     "Mrs",
     "Other",
   ];
+
+  verifyMobileApi() async {
+    String userid=await PrefUtils.getUserId()??'';
+    ref.watch(newApplicationViewModel).verifyMobileApi(
+        context: context,
+        UserID: userid,
+        ExisNumber: '',
+        NewMobileNumber: '',
+        ConfirmNumber: '');
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    verifyMobileApi();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +107,7 @@ class _VerifyMobileNoState extends State<VerifyMobileNo> {
                                   ),
                                   Expanded(flex: 2,child: TextFieldWidget(controller: _userNameController, name: "Name"))
                                 ],
-                              ),
+                              )
                             ),
                             ABTextInput(
                               autoValidator: AutovalidateMode.onUserInteraction,

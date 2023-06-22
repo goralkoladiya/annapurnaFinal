@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:annapurna225/AppImages.dart';
 import 'package:annapurna225/Dashboard/DashboardScreen.dart';
+import 'package:annapurna225/Modals/User.dart';
 import 'package:annapurna225/Screens/SplashScreen.dart';
 import 'package:annapurna225/api_factory/api.dart';
 import 'package:annapurna225/api_factory/api_end_points.dart';
@@ -16,13 +17,13 @@ import 'package:annapurna225/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../AppImages.dart';
+import '../../Modals/NotificationModel.dart';
 import '../../components/dialog.dart';
 
 
 class AuthenticationViewModel extends ChangeNotifier {
+  User? user;
   bool loginresult=true;
-
-
   void loginAPI({
     required BuildContext context,
     required String userName,
@@ -41,29 +42,33 @@ class AuthenticationViewModel extends ChangeNotifier {
       params: params,
       isCustomResponse: true,
       context: context,
-      onResponse: (response) {
+      onResponse: (response) async {
 
+        print("response=$response");
         if (response['status'] != false) {
           showSuccessSnackbar(response['message'], context);
           PrefUtils.setIsLoggedIn(true);
           PrefUtils.setUserid(userName);
           PrefUtils.setPassword(password);
+          PrefUtils.setUserRole(response['UserRole']);
+          // user=User.fromJson(response);
+          String status=await PrefUtils.getUserRole() ?? 'FCO';
+          print("status=$status");
+          // notifyListeners();
           PrefUtils.setToken(response['data']['token']);
-
+          loginresult=true;
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => DashboardPage(),
               ));
           // userDetail(context: context, userName: userName);
-          loginresult=true;
 
         }else{
           loginresult=false;
           handleApiError(response['message'], context);
         }
         notifyListeners();
-
       },
     );
   }
@@ -117,7 +122,6 @@ class AuthenticationViewModel extends ChangeNotifier {
     required String userName,
     required String Phoneno,
     required String OTPNO,
-
   }) {
     var params = {
       "UserID": userName,
@@ -262,7 +266,6 @@ class AuthenticationViewModel extends ChangeNotifier {
     required BuildContext context,
     required String userName,
     required String UserRole,
-
   }) {
     var params = {
       "UserID": userName,
@@ -281,8 +284,8 @@ class AuthenticationViewModel extends ChangeNotifier {
 
           print(response);
           showSuccessSnackbar(response['message'], context);
-          PrefUtils.setUserid(userName);
 
+          // List list = response;
           // Navigator.pushReplacement(
           //     context,
           //     MaterialPageRoute(
@@ -322,13 +325,47 @@ class AuthenticationViewModel extends ChangeNotifier {
 
           print(response);
           showSuccessSnackbar(response['message'], context);
-          PrefUtils.setUserid(userName);
 
           // Navigator.pushReplacement(
           //     context,
           //     MaterialPageRoute(
           //       builder: (context) => helpPage(),
           //     ));
+
+        }else{
+
+          handleApiError(response['message'], context);
+
+        }
+
+      },
+    );
+  }
+
+  NotificationModel? notificationModel;
+  void notificationAPI({
+    required BuildContext context,
+    required String userName,
+    required String UserRole,
+
+  }) {
+    var params = {
+      "UserID": userName,
+      "UserRole": UserRole,
+    };
+    Api.request(
+      method: HttpMethod.post,
+      path: ApiEndPoints.notification,
+      params: params,
+      isCustomResponse: true,
+      context: context,
+      onResponse: (response) {
+
+        print(response);
+        if (response['status'] != false) {
+          notificationModel = NotificationModel.fromJson(response);
+          notifyListeners();
+          showSuccessSnackbar(response['message'], context);
 
         }else{
 
