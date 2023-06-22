@@ -21,7 +21,7 @@ import '../../components/dialog.dart';
 
 
 class AuthenticationViewModel extends ChangeNotifier {
-
+  bool loginresult=true;
   void loginAPI({
     required BuildContext context,
     required String userName,
@@ -48,7 +48,7 @@ class AuthenticationViewModel extends ChangeNotifier {
           PrefUtils.setUserid(userName);
           PrefUtils.setPassword(password);
           PrefUtils.setToken(response['data']['token']);
-
+          loginresult=true;
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -57,11 +57,10 @@ class AuthenticationViewModel extends ChangeNotifier {
           // userDetail(context: context, userName: userName);
 
         }else{
-
+          loginresult=false;
           handleApiError(response['message'], context);
-
         }
-
+        notifyListeners();
       },
     );
   }
@@ -278,6 +277,7 @@ class AuthenticationViewModel extends ChangeNotifier {
           print(response);
           showSuccessSnackbar(response['message'], context);
 
+          List list = response;
           // Navigator.pushReplacement(
           //     context,
           //     MaterialPageRoute(

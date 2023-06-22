@@ -100,7 +100,6 @@ class DrawerModels extends ChangeNotifier{
         if (response['status'] != false) {
           showSuccessSnackbar(response['message'], context);
           luckCheckModel = LuckCheckModel.fromJson(response);
-          print("object ::: $luckCheckModel");
         }else{
           handleApiError(response['message'], context);
         }

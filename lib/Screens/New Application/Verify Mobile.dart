@@ -107,7 +107,7 @@ class _VerifyMobileNoState extends ConsumerState<VerifyMobileNo> {
                                   ),
                                   Expanded(flex: 2,child: TextFieldWidget(controller: _userNameController, name: "Name"))
                                 ],
-                              ),
+                              )
                             ),
                             ABTextInput(
                               autoValidator: AutovalidateMode.onUserInteraction,

@@ -29,7 +29,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-
         autovalidateMode: AutovalidateMode.onUserInteraction,
         onChanged: () => setState(() => _enableBtn = _formKey.currentState!.validate()),
         key: _formKey,
@@ -75,8 +74,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                       fontWeight: FontWeight.bold)),
                             ),
                             ABTextInput(
+                              iserror: ref.watch(authenticationProvider).loginresult ? null : Colors.red,
                               autoValidator: AutovalidateMode.onUserInteraction,
                               titleText: 'Username',
+                              textInputType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter username';
@@ -89,6 +90,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                             Padding(
                               padding: const EdgeInsets.only(top: 10.0),
                               child: ABTextInput(
+                                iserror: ref.watch(authenticationProvider).loginresult ? null:Colors.red,
                                 titleText: 'Password',
                                 autoValidator: AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -112,7 +114,15 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                 ),
                               ),
                             ),
-
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Row(
+                                children: [
+                                  ref.watch(authenticationProvider).loginresult?SizedBox():Icon(Icons.warning_amber,color: Colors.red,size: 15,),
+                                  ref.watch(authenticationProvider).loginresult?SizedBox():Text("The username or password is incorrect!",style: TextStyle(color: Colors.red,fontSize: 12)),
+                                ],
+                              ),
+                            ),
                             Row(
                               children: [
                                 Checkbox(
@@ -124,13 +134,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                     });
                                   },
                                 ),
-                                const Text('Remember Password'),
+                                const Text('Remember Me'),
                                 Spacer(),
                                 TextButton(
                                   onPressed: () {
                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => forgotPasswordPage(),));
                                   },
-                                  child: Text('Forgot Password?',
+                                  child: Text('Forget Password?',
                                     style: TextStyle(
                                         decoration: TextDecoration.underline,
                                         color: Colors.deepPurple,
