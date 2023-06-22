@@ -158,7 +158,14 @@ class _AddAadhaarState extends State<AddAadhaar> with WidgetsBindingObserver {
                   return CropAadhaar(images);
                 },));
                  }
-              }, child: Text("Capture",style: myTextStyle700.copyWith(fontWeight: FontWeight.w500),),
+              }, child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.camera_alt_rounded,color: Colors.white,),
+                  SizedBox(width: 5,),
+                  Text("Capture",style: myTextStyle700.copyWith(fontWeight: FontWeight.w500),),
+                ],
+              ),
                 style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor,fixedSize: Size(50.w, 6.h)),),
             ],
           )

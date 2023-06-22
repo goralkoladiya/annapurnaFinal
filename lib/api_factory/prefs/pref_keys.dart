@@ -13,7 +13,6 @@ class PrefKeys {
   static const String OTP = "OTP";
   static const String FAQ = "FAQ";
   static const String contact = "contact";
-  static const String VoterID = "VoterID";
 
 
 }

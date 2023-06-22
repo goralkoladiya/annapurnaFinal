@@ -94,7 +94,8 @@ class _ClientFoundState extends State<ClientFound> {
                         ),
                       ),
                       Container(padding: EdgeInsets.all(7),margin: EdgeInsets.fromLTRB(0,0,10,0),
-                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -102,11 +103,13 @@ class _ClientFoundState extends State<ClientFound> {
                                 Text("Village 1",style: myTextStyle500.copyWith(fontSize: 13),),
                               ],
                             ),
+                            SizedBox(width: 7.w,),
                             InkWell(
                               onTap: () {
 
                               },
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Icon(Icons.remove_red_eye,color: kPrimaryColor,),SizedBox(width:1.w),
                                   Text("View Household Details",

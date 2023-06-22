@@ -325,15 +325,38 @@ class _CenterAddressPageState extends State<CenterAddressPage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  TextButton(onPressed: () {
+                  Container(height: 52,
+                    margin: EdgeInsets.only(right: 1),
+                    width: 109.w,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFEAEAEA),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: TextButton(onPressed: () {
 
-                  }, child: Text("Basic details (Borrower)",style: myTextStyle100)),
-                  TextButton(onPressed: () {
+                    }, child: Text("Basic details (Borrower)",style: myTextStyle100)),
+                  ),
+                  Container(height: 52,
+                    margin: EdgeInsets.only(right: 1),
+                    width: 110.w,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFEAEAEA),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: TextButton(onPressed: () {
 
-                  }, child: Text("Earning member details",style: myTextStyle100)),
-                  TextButton(onPressed: () {
+                    }, child: Text("Earning member details",style: myTextStyle100)),
+                  ),
+                  Container(height: 52,
+                    width: 109.w,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFEAEAEA),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: TextButton(onPressed: () {
 
-                  }, child: Text("Household details",style: myTextStyle100,))
+                    }, child: Text("Household details",style: myTextStyle100)),
+                  ),
                 ],
               ),
             ),
@@ -344,11 +367,12 @@ class _CenterAddressPageState extends State<CenterAddressPage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
                   child: Container(
+                    alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(
                         color: gray,
-                      borderRadius: BorderRadius.circular(5)
+                      borderRadius: BorderRadius.circular(10)
                     ),
-                    height: 20.h,
+                    height: 30.h,
                     child: Padding(
                       padding: const EdgeInsets.only(left: defaultPadding),
                       child: Text("${Strings.centerAddress}",style: myTextStyle600),
@@ -359,61 +383,71 @@ class _CenterAddressPageState extends State<CenterAddressPage> {
             ],
           ),
           SizedBox(height: defaultPadding,),
-          Row(
-            children: [
-              Expanded(child: ABTextInput(
-                controller: pinCodeController,
-                autoValidator: AutovalidateMode.onUserInteraction,
-                titleText: Strings.pinCode,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter Pincode';
-                  }return null;
-                },
-                hintText: "Enter Pincode",
-              ),),
-              Expanded(child: ABTextInput(
-                controller: villageController,
-                suffix: Icon(Icons.search),
-                autoValidator: AutovalidateMode.onUserInteraction,
-                titleText: Strings.village,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter village';
-                  }return null;
-                },
-                hintText: "Search",
-              ),),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ABTextInput(
+                  controller: pinCodeController,
+                  autoValidator: AutovalidateMode.onUserInteraction,
+                  titleText: Strings.pinCode,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Pincode';
+                    }return null;
+                  },
+                  hintText: "Enter Pincode",
+                ),),
+                Expanded(
+                  child: ABTextInput(
+                  controller: villageController,
+                  suffix: Icon(Icons.search),
+                  autoValidator: AutovalidateMode.onUserInteraction,
+                  titleText: Strings.village,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter village';
+                    }return null;
+                  },
+                  hintText: "Search",
+                ),),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Expanded(child: ABTextInput(
-                controller: centerController,
-                suffix: Icon(Icons.search),
-                autoValidator: AutovalidateMode.onUserInteraction,
-                titleText: Strings.center,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter Center';
-                  }return null;
-                },
-                hintText: "Search",
-              ),),
-              Expanded(child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                child: Text("Available at Darkarng C1:2/15",style: myTextStyle600,),
-              ))
-            ],
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ABTextInput(
+                  controller: centerController,
+                  suffix: Icon(Icons.search),
+                  autoValidator: AutovalidateMode.onUserInteraction,
+                  titleText: Strings.center,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Center';
+                    }return null;
+                  },
+                  hintText: "Search",
+                ),),
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                  child: Text("Available at Darkarng C1:2/15",style: myTextStyle600,),
+                ))
+              ],
+            ),
           ),
           SizedBox(height: defaultPadding,),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+            padding: const EdgeInsets.only(left: defaultPadding,right: 20),
             child: Row(
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(right: defaultPadding),
+                    padding: const EdgeInsets.only(left: 8,right: defaultPadding),
                     child: Container(
                       height: 40.h,
                       child: OutlinedButton(

@@ -324,174 +324,219 @@ class _EarningMemberDetailsFormPageState extends State<EarningMemberDetailsFormP
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  TextButton(onPressed: () {
+                  Container(height: 52,
+                    margin: EdgeInsets.only(right: 1),
+                    width: 109.w,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFEAEAEA),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: TextButton(onPressed: () {
 
-                  }, child: Text("Basic details (Borrower)",style: myTextStyle100)),
-                  TextButton(onPressed: () {
+                    }, child: Text("Basic details (Borrower)",style: myTextStyle100)),
+                  ),
+                  Container(height: 52,
+                    margin: EdgeInsets.only(right: 1),
+                    width: 110.w,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFEAEAEA),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: TextButton(onPressed: () {
 
-                  }, child: Text("Earning member details",style: myTextStyle100)),
-                  TextButton(onPressed: () {
+                    }, child: Text("Earning member details",style: myTextStyle100)),
+                  ),
+                  Container(height: 52,
+                    width: 109.w,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFEAEAEA),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: TextButton(onPressed: () {
 
-                  }, child: Text("Household details",style: myTextStyle100,))
+                    }, child: Text("Household details",style: myTextStyle100)),
+                  ),
                 ],
               ),
             ),
           ),
-          Row(
-            children: [
-              Expanded(
-                child: dropdown_widget(
-                  value: i,
-                  name: Strings.familyType,
-                  onChanged: (p0) {
-                    setState(() {
-                      i=p0!;
-                    });
-                  },
-                  data: data,
-                ),
-              ),
-              Expanded(child: ABTextInput(
-                controller: nonEarningMemberController,
-                autoValidator: AutovalidateMode.onUserInteraction,
-                titleText: Strings.nonEarningMember,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter members';
-                  }return null;
-                },
-                hintText: "1",
-              ),),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(child: ABTextInput(
-                controller: tHouseFamilyMembersController,
-                autoValidator: AutovalidateMode.onUserInteraction,
-                titleText: Strings.totalHouseholdFamilyMembers,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter members';
-                  }return null;
-                },
-                hintText: "4",
-              ),),
-              Expanded(child: ABTextInput(
-                controller: unmarriedMembersController,
-                autoValidator: AutovalidateMode.onUserInteraction,
-                titleText: Strings.noOfUnmarriedChildren,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter members';
-                  }return null;
-                },
-                hintText: "2",
-              ),),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(child: ABTextInput(
-                controller: dependentsController,
-                autoValidator: AutovalidateMode.onUserInteraction,
-                titleText: Strings.noOFDependents,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter members';
-                  }return null;
-                },
-                hintText: "5",
-              ),),
-              Expanded(
-                child: dropdown_widget(
-                  value: i,
-                  name: Strings.typeOfRoof,
-                  onChanged: (p0) {
-                    setState(() {
-                      i=p0!;
-                    });
-                  },
-                  data: data,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: dropdown_widget(
-                  value: i,
-                  name: Strings.typeOfOwnerShip,
-                  onChanged: (p0) {
-                    setState(() {
-                      i=p0!;
-                    });
-                  },
-                  data: data,
-                ),
-              ),
-              Expanded(
-                child: dropdown_widget(
-                  value: i,
-                  name: Strings.locality,
-                  onChanged: (p0) {
-                    setState(() {
-                      i=p0!;
-                    });
-                  },
-                  data: data,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: dropdown_widget(
-                  value: i,
-                  name: Strings.religionCommunity,
-                  onChanged: (p0) {
-                    setState(() {
-                      i=p0!;
-                    });
-                  },
-                  data: data,
-                ),
-              ),
-              Expanded(
-                child: dropdown_widget(
-                  value: i,
-                  name: Strings.casteCategory,
-                  onChanged: (p0) {
-                    setState(() {
-                      i=p0!;
-                    });
-                  },
-                  data: data,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 13.h,),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  height: 40.h,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: kPrimaryColor
-                        ),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => HouseHoldDetailsPage(),));
-                        }, child: Text("Save & Next")),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+            child: Row(
+              children: [
+                Expanded(
+                  child: dropdown_widget(
+                    value: i,
+                    name: Strings.familyType,
+                    onChanged: (p0) {
+                      setState(() {
+                        i=p0!;
+                      });
+                    },
+                    data: data,
                   ),
                 ),
-              ),
-            ],
+                Expanded(child: ABTextInput(
+                  controller: nonEarningMemberController,
+                  autoValidator: AutovalidateMode.onUserInteraction,
+                  titleText: Strings.nonEarningMember,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter members';
+                    }return null;
+                  },
+                  hintText: "1",
+                ),),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: ABTextInput(
+                  controller: tHouseFamilyMembersController,
+                  autoValidator: AutovalidateMode.onUserInteraction,
+                  titleText: Strings.totalHouseholdFamilyMembers,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter members';
+                    }return null;
+                  },
+                  hintText: "4",
+                ),
+                ),
+                Expanded(
+                  child: ABTextInput(
+                  controller: unmarriedMembersController,
+                  autoValidator: AutovalidateMode.onUserInteraction,
+                  titleText: Strings.noOfUnmarriedChildren,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter members';
+                    }return null;
+                  },
+                  hintText: "2",
+                ),),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+            child: Row(
+              children: [
+                Expanded(child: ABTextInput(
+                  controller: dependentsController,
+                  autoValidator: AutovalidateMode.onUserInteraction,
+                  titleText: Strings.noOFDependents,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter members';
+                    }return null;
+                  },
+                  hintText: "5",
+                ),),
+                Expanded(
+                  child: dropdown_widget(
+                    value: i,
+                    name: Strings.typeOfRoof,
+                    onChanged: (p0) {
+                      setState(() {
+                        i=p0!;
+                      });
+                    },
+                    data: data,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+            child: Row(
+              children: [
+                Expanded(
+                  child: dropdown_widget(
+                    value: i,
+                    name: Strings.typeOfOwnerShip,
+                    onChanged: (p0) {
+                      setState(() {
+                        i=p0!;
+                      });
+                    },
+                    data: data,
+                  ),
+                ),
+                Expanded(
+                  child: dropdown_widget(
+                    value: i,
+                    name: Strings.locality,
+                    onChanged: (p0) {
+                      setState(() {
+                        i=p0!;
+                      });
+                    },
+                    data: data,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+            child: Row(
+              children: [
+                Expanded(
+                  child: dropdown_widget(
+                    value: i,
+                    name: Strings.religionCommunity,
+                    onChanged: (p0) {
+                      setState(() {
+                        i=p0!;
+                      });
+                    },
+                    data: data,
+                  ),
+                ),
+                Expanded(
+                  child: dropdown_widget(
+                    value: i,
+                    name: Strings.casteCategory,
+                    onChanged: (p0) {
+                      setState(() {
+                        i=p0!;
+                      });
+                    },
+                    data: data,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 13.h,),
+          Padding(
+            padding: const EdgeInsets.only(left: 70,right: 70),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 40.h,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: kPrimaryColor
+                          ),
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => HouseHoldDetailsPage(),));
+                          }, child: Text("Save & Next")),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),

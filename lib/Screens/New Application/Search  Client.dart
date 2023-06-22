@@ -64,7 +64,7 @@ class _SearchClientState extends State<SearchClient> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(top: 25.0, left: 15, bottom: 20),
+                            padding: EdgeInsets.only(top: 25.0, left: defaultPadding, bottom: 20),
                             child: Text('Search Client',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
@@ -72,15 +72,12 @@ class _SearchClientState extends State<SearchClient> {
                                     fontSize: 19,
                                     fontWeight: FontWeight.bold)),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: dropdown_widget(hint: "Select",
-                              name: "Choose Search Type",value: Prof,data: prof,
-                              onChanged: (p0) {
-                                Prof = p0;
-                                setState(() {});
-                              },),
-                          ),
+                          dropdown_widget(hint: "Select",
+                            name: "Choose Search Type",value: Prof,data: prof,
+                            onChanged: (p0) {
+                              Prof = p0;
+                              setState(() {});
+                            },),
                           ABTextInput(
                             autoValidator: AutovalidateMode.onUserInteraction,
                             titleText: 'Enter Detail',
@@ -89,24 +86,26 @@ class _SearchClientState extends State<SearchClient> {
                               setState(() {});
                             },
                             controller: _userNameController,
-                            hintText: 'Enter Detail',
+                            hintText: 'Enter Details',
                           ),
 
 
-                          ( Prof!=null || filed.isEmpty) ?
-                          ABButton(
-                            paddingTop: MediaQuery.of(context).size.height * 0.0225,
-                            paddingBottom: 15.0, paddingLeft: 20.0, paddingRight: 20.0,
-                            btnColor: grey.shade200,textColor: grey,
-                            text: 'Search',
-                            onPressed: () {
-                              myDiloag2(context, "assets/dailog.png", "No Record Found!Enrol as New Client?",
-                                  "Yes! Proceed", (){
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NewClientAdd(),));
-                                  }, "Cancel", (){});
-                            },
-                          )
-                              : ABButton(
+                          // ( Prof!=null || filed.isEmpty) ?
+                          // ABButton(
+                          //   paddingTop: MediaQuery.of(context).size.height * 0.0225,
+                          //   paddingBottom: 15.0, paddingLeft: defaultPadding,
+                          //   paddingRight: defaultPadding,
+                          //   btnColor: grey.shade200,textColor: grey,
+                          //   text: 'Search',
+                          //   onPressed: () {
+                          //     myDiloag2(context, "assets/dailog.png", "No Record Found!Enrol as New Client?",
+                          //         "Yes! Proceed", (){
+                          //           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NewClientAdd(),));
+                          //         }, "Cancel", (){});
+                          //   },
+                          // )
+                          //     :
+                    ABButton(
                             paddingTop: MediaQuery.of(context).size.height * 0.0225,
                             paddingBottom: 15.0,
                             paddingLeft: 20.0,

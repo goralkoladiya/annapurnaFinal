@@ -19,7 +19,7 @@ class _AppliProceedState extends State<AppliProceed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: Colors.white),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -76,45 +76,44 @@ class _AppliProceedState extends State<AppliProceed> {
                       ],
                     ),
                   ),
-
-                  Row(
-                    children: [
-                      Expanded(child: ABButton(
-                        paddingTop: MediaQuery.of(context).size.height * 0.0225,
-                        paddingBottom: 15.0,
-                        paddingLeft: 15,btnColor: Colors.white,
-                        paddingRight: 15,textColor: kPrimaryColor,
-                        text: 'View on map',
-                        onPressed: () {
-                         
-                        },
-                      )),
-                      Expanded(child: ABButton(
-                        paddingTop: MediaQuery.of(context).size.height * 0.0225,
-                        paddingBottom: 15.0,
-                        paddingLeft: 15,
-                        paddingRight: 15,
-                        text: 'Proceed',
-                        onPressed: () {
-                          myDiloag(context, "assets/dailog.png" ,"No Data Available", "Okay",boxheight: 32 ,(){
-                            myDiloag(context, "assets/add person.png" ,"Client is not eligible!", "Okay",boxheight: 32 ,(){
-                              myDiloag2(context, "assets/link.png", "Are you sure to Unlink Rajeshfrom the Household?",
-                                  "Yes! Proceed", (){
-                                myDiloag(context, "assets/Broken_Link.png", "Rajesh has been removed from the household successfully",
-                                    "Okay", (){
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerifyMobileNo(),));
-                                  },);
-                                  }, "Cancel", (){});
-                            });
-                          });
-                          //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppliProceed(),));
-                        },
-                      ))
-                    ],
-                  )
                 ],
               ),
             ),
+            Row(
+              children: [
+                Expanded(child: ABButton(
+                  paddingTop: MediaQuery.of(context).size.height * 0.0225,
+                  paddingBottom: 15.0,
+                  paddingLeft: 15,btnColor: Colors.white,
+                  paddingRight: 15,textColor: kPrimaryColor,
+                  text: 'View on map',
+                  onPressed: () {
+
+                  },
+                )),
+                Expanded(child: ABButton(
+                  paddingTop: MediaQuery.of(context).size.height * 0.0225,
+                  paddingBottom: 15.0,
+                  paddingLeft: 15,
+                  paddingRight: 15,
+                  text: 'Proceed',
+                  onPressed: () {
+                    myDiloag(context, "assets/dailog.png" ,"No Data Available", "Okay",boxheight: 32 ,(){
+                      myDiloag(context, "assets/add person.png" ,"Client Is Not Eligible!", "Okay",boxheight: 32 ,(){
+                        myDiloag2(context, "assets/link.png", "Are You Sure To Unlink Rajesh From The Household?",
+                            "Yes! Proceed", (){
+                              myDiloag(context, "assets/Broken_Link.png", "Rajesh Has Been Removed From The Household Successfully",
+                                "Okay", (){
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerifyMobileNo(),));
+                                },);
+                            }, "Cancel", (){});
+                      });
+                    });
+                    //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AppliProceed(),));
+                  },
+                ))
+              ],
+            )
           ],
         ),
       ),
