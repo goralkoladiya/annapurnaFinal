@@ -1,3 +1,4 @@
+import 'package:annapurna225/components/dropdown_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,11 +18,13 @@ class _cb_daviationState extends State<cb_daviation> {
   final _passwordController = TextEditingController();
   bool _isObscure = true;
   bool _checkbox = false;
+  String? clients;
+  List clientData=["Voter ID","Aadhhar Card"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: white,
         title: Text(
           "CB Deviation data",
@@ -229,7 +232,7 @@ class _cb_daviationState extends State<cb_daviation> {
                 size: 15,
               ))
         ],
-      ),
+      ),*/
       body: SingleChildScrollView(
         child: Container(
           color: Colors.blueGrey,
@@ -244,13 +247,13 @@ class _cb_daviationState extends State<cb_daviation> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Expanded(
-                        child: ABTextInput(
-                          autoValidator: AutovalidateMode.onUserInteraction,
-                          titleText: 'Enter Details',
-                          hintText: 'Enter Details',
-                        ),
-                      ),
+
+                      Expanded(child: dropdown_widget(hint: "Select",
+                        name: "Search Client By",value: clients,data: clientData,
+                        onChanged: (p0) {
+                          clients = p0;
+                          setState(() {});
+                        },),),
                       Expanded(
                         child: ABTextInput(
                           autoValidator: AutovalidateMode.onUserInteraction,
@@ -292,116 +295,105 @@ class _cb_daviationState extends State<cb_daviation> {
                         "All CB Data",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       )),
-                  Padding(
-                    padding: const EdgeInsets.all(defaultPadding),
-                    child: Container(
-                      height: 170,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadiusDirectional.all(Radius.circular(10)),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.shade600,
-                                blurRadius: 7,
-                                spreadRadius: 1)
-                          ]),
-                      child: Padding(
-                        padding: const EdgeInsets.all(defaultPadding),
-                        child: Column(children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Client Name", style: myTextStylegrey),
-                              Text("Voter ID", style: myTextStylegrey),
-                              Text("CB Status", style: myTextStylegrey)
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 5.0),
-                                child:
-                                    Text("Jai Prakash", style: myTextStyle600),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 95.0),
-                                child: Text("123456", style: myTextStyle600),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 100.0),
-                                child: Text("Active", style: myTextStyle600),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Text("Rejection Reason", style: myTextStylegrey),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 70.0),
-                                child: Text("Status", style: myTextStylegrey),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text("Lorem Ipsum is dummy text",
-                                  style: myTextStyle600),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20.0),
-                                child: Text("Reject", style: myTextStyle600),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
+
+                  Container(
+                    height: 170,margin: EdgeInsets.all(10),padding: EdgeInsets.all(defaultPadding),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadiusDirectional.all(Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.shade600,
+                              blurRadius: 7,
+                              spreadRadius: 1)
+                        ]),
+                    child: Column(
+                      children: [
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Client Name", style: myTextStylegrey),
+                                Text("Jai Prakash", style: myTextStyle600),
+                                const SizedBox(height: 10,),
+                                Text("Rejection Reason", style: myTextStylegrey),
+                                Text("Lorem Ipsum is dummy text", style: myTextStyle600),
+                              ],
+                            ),
+
+                            Column(crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Voter ID", style: myTextStylegrey),
+                                Text("123456", style: myTextStyle600),
+                                const SizedBox(height: 10,),
+                                Text("Status", style: myTextStylegrey),
+                                Text("Reject", style: myTextStyle600),
+                              ],
+                            ),
+
+                            Column(crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("CB Status", style: myTextStylegrey),
+                                Text("Active", style: myTextStyle600),
+                                const SizedBox(height: 10,),
+                                Text(""),
+                                Text(""),
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 10,),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+
+                                },
                                 child: Row(children: [
                                   Icon(
                                     Icons.remove_red_eye_rounded,
                                     color: Colors.blue,
                                     size: 15,
-                                  ),
-                                  TextButton(
-                                    onPressed: () {},
-                                    child: Text("View CB Report",
-                                        style: myTextStyleblue),
-                                  )
+                                  ),SizedBox(width: 5,),
+                                  Text("View CB Report", style: myTextStyleblue.copyWith(fontWeight: FontWeight.bold))
                                 ]),
                               ),
-                              Expanded(
-                                child: ABButton(
-                                    paddingTop:0,
-                                    paddingBottom: 0.0,
-                                    paddingLeft: 0.0,
-                                    paddingRight: 0.0,
-                                    text: 'Raise Request',
-                                    size: 12,
-                                    onPressed: () {}),
-                              ),
-                              Expanded(
-                                child: ABButton(
-                                    size: 12,
-                                    paddingTop:0,
-                                    paddingBottom: 0.0,
-                                    paddingLeft: 0.0,
-                                    paddingRight: 0.0,
-                                    text: 'Reject',
-                                    onPressed: () {}),
+                            ),
+                            Expanded(
+                              child: InkWell(onTap: () {
+
+                              },
+                                child: Container(margin: EdgeInsets.all(2),
+                                  padding: EdgeInsets.all(10),alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: kPrimaryColor,
+                                    borderRadius: BorderRadius.circular(6)
+                                  ),
+                                  child: Text("Raise Request",style: TextStyle(color: Colors.white,fontSize: 12)),
+                                ),
                               )
-                            ],
-                          )
-                        ]),
-                      ),
+                            ),
+                            Expanded(
+                                child: InkWell(onTap: () {
+
+                                },
+                                  child: Container(margin: EdgeInsets.all(2),
+                                    padding: EdgeInsets.all(10),alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: kPrimaryColor,
+                                        borderRadius: BorderRadius.circular(6)
+                                    ),
+                                    child: Text("Reject",style: TextStyle(color: Colors.white,fontSize: 12)),
+                                  ),
+                                )
+                            ),
+
+                          ],
+                        )
+                      ],
                     ),
-                  )
+                  ),
                 ],
               ),
             )

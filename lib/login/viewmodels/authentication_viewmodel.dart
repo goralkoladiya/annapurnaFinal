@@ -285,7 +285,7 @@ class AuthenticationViewModel extends ChangeNotifier {
           print(response);
           showSuccessSnackbar(response['message'], context);
 
-          List list = response;
+          // List list = response;
           // Navigator.pushReplacement(
           //     context,
           //     MaterialPageRoute(

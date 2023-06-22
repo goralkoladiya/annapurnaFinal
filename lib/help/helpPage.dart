@@ -25,7 +25,7 @@ class _helpPageState extends ConsumerState<helpPage> {
   }
 
   FAQAPICALL() async {
-    String userid=await PrefUtils.getUserId()??'';
+    String userid=await PrefUtils.getUserId() ?? '';
     ref.watch(authenticationProvider).FAQAPI(
       context: context,
       userName:userid,

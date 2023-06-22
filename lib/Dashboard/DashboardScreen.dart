@@ -12,6 +12,8 @@ import 'package:annapurna225/components/TextBtnWidget.dart';
 import 'package:annapurna225/help/helpPage.dart';
 import 'package:annapurna225/login/login_view.dart';
 import 'package:annapurna225/notifier/providers.dart';
+import 'package:annapurna225/ve.client%20details/borrowerDetails.dart';
+import 'package:annapurna225/ve.client%20details/clientList.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sizer/sizer.dart';
@@ -20,6 +22,7 @@ import '../../components/constants.dart';
 import '../../components/dropdown_widget.dart';
 import '../Modals/StatisticsDataDetails.dart';
 import '../Screens/Fees And Charges/Fees.dart';
+import '../cb_daviation_data/cb_daviation_data.dart';
 
 
 class DashboardPage extends ConsumerStatefulWidget {
@@ -165,7 +168,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   }
   bool get=true;
   int pos=0;
-  List<Widget> list=[SearchClient(),LafSearchClient(),Luccheck(),GetLocation(),Hhmonthly(),FeesCharges(),AddClient(),helpPage(),changePassword()];
+  List<Widget> list=[SearchClient(),LafSearchClient(),Luccheck(),GetLocation(),cb_daviation()/*Hhmonthly()*/,FeesCharges(),AddClient(),helpPage(),changePassword()];
 
   @override
   Widget build(BuildContext context) {
