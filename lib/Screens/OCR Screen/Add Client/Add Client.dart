@@ -46,7 +46,7 @@ class _AddClientState extends State<AddClient> with TickerProviderStateMixin {
         await showDialog(context: context, builder: (context) {
           return AlertDialog(
             content: SizedBox(
-              height: 180,
+              height: 200,
               child: Column(
                 children: [
                   Image(image: AssetImage("assets/Done.png")),
@@ -630,10 +630,15 @@ class _EditVoterIDState extends State<EditVoterID> {
                   SizedBox(height: 2.h,),
 
                   TextBtnWidget(name: "Update", onTap: () {
-                    myDiloag(context,done,"Voter ID Captured \n successfully","Initiate Voter OCR",(){    });
-                              // Navigator.push(context, MaterialPageRoute(builder: (context) => AddClient(),));
+                    myDiloag(context,done,"Voter ID Captured \n successfully","Initiate Voter OCR",(){
+                      // setState(() {
+                      //   Navigator.push(context, MaterialPageRoute(builder: (context) => AddClient(null,),));
+                      // });
+                    },boxheight: 32);
 
-                    //myDiloag2(context, done, "Voter Verification Failed", "Retry", (){}, "Skip", (){});
+                    // (selectedIndex == 1)? Navigator.push(context, MaterialPageRoute(builder: (context) => AddClient(),)): Navigator.push(context, MaterialPageRoute(builder: (context) => AddClient(),));;
+
+                   // myDiloag2(context, done, "Voter Verification Failed", "Retry", (){}, "Skip", (){});
                   },)
                 ],
               ),

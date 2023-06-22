@@ -77,6 +77,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                             ABTextInput(
                               autoValidator: AutovalidateMode.onUserInteraction,
                               titleText: 'Username',
+                              textInputType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter username';
@@ -89,6 +90,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                             Padding(
                               padding: const EdgeInsets.only(top: 10.0),
                               child: ABTextInput(
+                                iserror: ref.watch(authenticationProvider).loginresult?null:Colors.red,
                                 titleText: 'Password',
                                 autoValidator: AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -124,13 +126,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                     });
                                   },
                                 ),
-                                const Text('Remember Password'),
+                                const Text('Remember Me'),
                                 Spacer(),
                                 TextButton(
                                   onPressed: () {
                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => forgotPasswordPage(),));
                                   },
-                                  child: Text('Forgot Password?',
+                                  child: Text('Forget Password?',
                                     style: TextStyle(
                                         decoration: TextDecoration.underline,
                                         color: Colors.deepPurple,

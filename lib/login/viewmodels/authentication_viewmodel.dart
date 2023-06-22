@@ -20,6 +20,8 @@ import '../../components/dialog.dart';
 
 
 class AuthenticationViewModel extends ChangeNotifier {
+  bool loginresult=true;
+
 
   void loginAPI({
     required BuildContext context,
@@ -54,12 +56,13 @@ class AuthenticationViewModel extends ChangeNotifier {
                 builder: (context) => DashboardPage(),
               ));
           // userDetail(context: context, userName: userName);
+          loginresult=true;
 
         }else{
-
+          loginresult=false;
           handleApiError(response['message'], context);
-
         }
+        notifyListeners();
 
       },
     );

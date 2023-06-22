@@ -75,7 +75,7 @@ class _SearchClientState extends State<SearchClient> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: dropdown_widget(hint: "Select",
-                              name: "Choose Search By",value: Prof,data: prof,
+                              name: "Choose Search Type",value: Prof,data: prof,
                               onChanged: (p0) {
                                 Prof = p0;
                                 setState(() {});

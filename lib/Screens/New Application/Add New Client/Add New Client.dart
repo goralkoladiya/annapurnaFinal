@@ -1,3 +1,4 @@
+import 'package:annapurna225/Screens/New%20Application/Client%20Found.dart';
 import 'package:annapurna225/components/TextFieldWidget.dart';
 import 'package:annapurna225/components/dialog.dart';
 import 'package:flutter/material.dart';
@@ -180,6 +181,7 @@ class _NewClientAddState extends State<NewClientAdd> {
                                     child: Padding(
                                       padding: const EdgeInsets.only(right: 20,top: 10,bottom: 10),
                                       child: InkWell(onTap: () {
+
                                         visible=true;
                                         setState(() {});
                                       },child: Text("Send OTP",style: TextStyle(fontWeight: FontWeight.bold,decoration: TextDecoration.underline,color: kPrimaryColor))),
@@ -194,7 +196,7 @@ class _NewClientAddState extends State<NewClientAdd> {
                                   onPressed: () {
                                     myDiloag2(context, "assets/checklist.png", "Client Enrolment", "Branch",boxheight: 40,
                                             (){}, "Field", (){
-                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerifyMobileNo(),));
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ClientFound(),));
                                         });
                                   },
                                 ),

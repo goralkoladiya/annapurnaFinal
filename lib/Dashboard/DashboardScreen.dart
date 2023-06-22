@@ -1,6 +1,7 @@
 import 'package:annapurna225/HouseHoldCashFlowDetails/HHmonthly.dart';
 import 'package:annapurna225/Modals/StatisticsDataDetails.dart';
 import 'package:annapurna225/Screens/LAF%20Status/LAF%20Search%20Client.dart';
+import 'package:annapurna225/Screens/LUC%20Check/LucSearchClient.dart';
 import 'package:annapurna225/Screens/LUC%20Check/Luccheck.dart';
 import 'package:annapurna225/Screens/New%20Application/Add%20New%20Client/Add%20New%20Client.dart';
 import 'package:annapurna225/Screens/New%20Application/Search%20%20Client.dart';
@@ -176,7 +177,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   }
   bool get=true;
   int pos=0;
-  List<Widget> list=[SearchClient(),LafSearchClient(),Luccheck(),GetLocation(),Hhmonthly(),FeesCharges(),AddClient(),helpPage(),changePassword()];
+  List<Widget> list=[SearchClient(),LafSearchClient(),LucSearchClient(),GetLocation(),Hhmonthly(),FeesCharges(),AddClient(),helpPage(),changePassword(),];
 
   @override
   Widget build(BuildContext context) {
@@ -1084,13 +1085,13 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                           tooltipBehavior: _tooltip,
                           series: <ChartSeries<StatisticsDataDetails, String>>[
                             ColumnSeries<StatisticsDataDetails, String>(
-                                dataSource: (ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails! !=null) ?
+                                dataSource: (ref.watch(dashboardProvider).statisticsDataDetailsModal !=null) ?
                                 ref.watch(dashboardProvider).statisticsDataDetailsModal!.statisticsDataDetails! : [],
 
                                 xValueMapper: (StatisticsDataDetails data, _) => (data.mONTHName !=null) ? data.mONTHName as String : "",
                                 dataLabelSettings: DataLabelSettings(textStyle: TextStyle(fontSize: 5),),
                                 yValueMapper: (StatisticsDataDetails data, _) =>
-                                (data.clients! !=null) ? int.parse(data.clients!) : 0,
+                                (data.clients !=null) ? int.parse(data.clients!) : 0,
                                 name: 'Disbursed Applicants',
                                 color: chartColorGreen,
                             ),

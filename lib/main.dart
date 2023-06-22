@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             home: Sizer(
               builder: (context, orientation, deviceType) {
-                return SplashView();
+                return DashboardPage();
               },
             ),
             debugShowCheckedModeBanner: false,

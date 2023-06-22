@@ -1,3 +1,4 @@
+import 'package:annapurna225/Screens/LUC%20Check/Luccheck.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -405,7 +406,7 @@ class _LucSearchClientState extends State<LucSearchClient> {
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => StatusDetail(),
+                                          builder: (context) => Luccheck(),
                                         ));
                                   },
                                 )
@@ -421,7 +422,7 @@ class _LucSearchClientState extends State<LucSearchClient> {
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => StatusDetail(),
+                                          builder: (context) => Luccheck(),
                                         ));
                                   },
                                 )
