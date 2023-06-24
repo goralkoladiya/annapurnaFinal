@@ -1,3 +1,4 @@
+import 'package:annapurna225/Screens/LUC%20Check/LoanProduct.dart';
 import 'package:annapurna225/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -384,121 +385,128 @@ class _LuccheckState extends State<Luccheck> {
             child: ListView.builder(
               itemCount: 10,
               itemBuilder: (context, index) {
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  elevation: 5,
-                  shadowColor: Colors.black,
-                  child: Container(
-                    height: 15.h,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: 3.w,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Applicant Name",
-                                  style: myTextStyle600a.copyWith(color: grey),
-                                ),
-                                SizedBox(
-                                  height: .5.h,
-                                ),
-                                Text(
-                                  "Jai Prakash",
-                                  style: myTextStyle500.copyWith(fontSize: 14),
-                                ),
-                                SizedBox(
-                                  height: 1.5.h,
-                                ),
-                                Text(
-                                  "Center Name",
-                                  style: myTextStyle600a.copyWith(color: grey),
-                                ),
-                                Text(
-                                  "C1",
-                                  style: myTextStyle500.copyWith(fontSize: 14),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Spouse",
-                                  style: myTextStyle600a.copyWith(color: grey),
-                                ),
-                                SizedBox(
-                                  height: .5.h,
-                                ),
-                                Text(
-                                  "Meena",
-                                  style: myTextStyle500.copyWith(fontSize: 14),
-                                ),
-                                SizedBox(
-                                  height: 1.5.h,
-                                ),
-                                Text(
-                                  "Group Name",
-                                  style: myTextStyle600a.copyWith(color: grey),
-                                ),
-                                Text(
-                                  "Group One",
-                                  style: myTextStyle500.copyWith(fontSize: 14),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Voter Id",
-                                  style: myTextStyle600a.copyWith(color: grey),
-                                ),
-                                SizedBox(
-                                  height: .5.h,
-                                ),
-                                Text(
-                                  "4567899",
-                                  style: myTextStyle500.copyWith(fontSize: 14),
-                                ),
-                                SizedBox(
-                                  height: 1.2.h,
-                                ),
-                                Text(
-                                  "",
-                                  style: myTextStyle600a.copyWith(color: grey),
-                                ),
-                                SizedBox(
-                                  height: .5.h,
-                                ),
-                                Text(
-                                  "",
-                                  style: myTextStyle500.copyWith(fontSize: 14),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 2.w,
-                            ),
-                          ],
-                        ),
-                      ],
+                return InkWell(
+                  onTap: (){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                      return LoanProductPage();
+                    }));
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    elevation: 5,
+                    shadowColor: Colors.black,
+                    child: Container(
+                      height: 15.h,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Applicant Name",
+                                    style: myTextStyle600a.copyWith(color: grey),
+                                  ),
+                                  SizedBox(
+                                    height: .5.h,
+                                  ),
+                                  Text(
+                                    "Jai Prakash",
+                                    style: myTextStyle500.copyWith(fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                    height: 1.5.h,
+                                  ),
+                                  Text(
+                                    "Center Name",
+                                    style: myTextStyle600a.copyWith(color: grey),
+                                  ),
+                                  Text(
+                                    "C1",
+                                    style: myTextStyle500.copyWith(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 8.w,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Spouse",
+                                    style: myTextStyle600a.copyWith(color: grey),
+                                  ),
+                                  SizedBox(
+                                    height: .5.h,
+                                  ),
+                                  Text(
+                                    "Meena",
+                                    style: myTextStyle500.copyWith(fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                    height: 1.5.h,
+                                  ),
+                                  Text(
+                                    "Group Name",
+                                    style: myTextStyle600a.copyWith(color: grey),
+                                  ),
+                                  Text(
+                                    "Group One",
+                                    style: myTextStyle500.copyWith(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 8.w,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Voter Id",
+                                    style: myTextStyle600a.copyWith(color: grey),
+                                  ),
+                                  SizedBox(
+                                    height: .5.h,
+                                  ),
+                                  Text(
+                                    "4567899",
+                                    style: myTextStyle500.copyWith(fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                    height: 1.2.h,
+                                  ),
+                                  Text(
+                                    "",
+                                    style: myTextStyle600a.copyWith(color: grey),
+                                  ),
+                                  SizedBox(
+                                    height: .5.h,
+                                  ),
+                                  Text(
+                                    "",
+                                    style: myTextStyle500.copyWith(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

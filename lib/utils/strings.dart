@@ -377,6 +377,12 @@ class Strings {
   static String totalCostTable="Total Cost Table";
   static String ltv="LTV";
   static String applicantShare="Applicant Share (in %)";
+  static String approveloanamount="Approve Loan Amount";
+  static String PDDate="PD Date";
+  static String PDStatus="PD Status";
+  static String Remark="Remark";
+
+
 
 
 }

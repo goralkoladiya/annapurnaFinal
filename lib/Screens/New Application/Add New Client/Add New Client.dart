@@ -10,7 +10,6 @@ import '../../../components/dropdown_widget.dart';
 import '../../../widgets/ab_button.dart';
 import '../../../widgets/ab_text_input.dart';
 import '../Update Mobile.dart';
-import '../Verify Mobile.dart';
 
 class NewClientAdd extends StatefulWidget {
   const NewClientAdd({Key? key}) : super(key: key);
@@ -25,19 +24,10 @@ class _NewClientAddState extends State<NewClientAdd> {
   TextEditingController relation = TextEditingController();
   bool visible = false;
   String? Prof;
-  String? Relation;
-
   List prof = [
     "Mr.",
     "Mrs",
     "Other",
-  ];
-  List profRelation = [
-    "Father",
-    "Mother",
-    "Brother",
-    "Sister",
-
   ];
 
   @override
@@ -70,7 +60,7 @@ class _NewClientAddState extends State<NewClientAdd> {
                     Padding(
                       padding: const EdgeInsets.only(top: defaultPadding,left: 25,right: 25,bottom: 5),
                       child: Container(
-                          height: 70.h,
+                          height: 85.h,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.black, width: 3),
@@ -92,8 +82,7 @@ class _NewClientAddState extends State<NewClientAdd> {
                                           fontWeight: FontWeight.bold)),
                                 ),
                                 Padding(
-                                  //padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                                  padding: EdgeInsets.only(right: 12),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -109,11 +98,11 @@ class _NewClientAddState extends State<NewClientAdd> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(right: 2),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: dropdown_widget(hint: "Father.",
-                                    name: "Relationship Details",value: Relation,data: profRelation,
+                                    name: "Relationship Details",value: Prof,data: prof,
                                     onChanged: (p0) {
-                                      Relation = p0;
+                                      Prof = p0;
                                       setState(() {});
                                     },),
                                 ),
@@ -124,7 +113,7 @@ class _NewClientAddState extends State<NewClientAdd> {
                                   controller: mobile,hintText: 'Enter Mobile',
                                 ),
                                 const Padding(
-                                  padding: EdgeInsets.only(left: 15,right: 20,bottom: 0,top: 5),
+                                  padding: EdgeInsets.only(left: 20,right: 20,bottom: 0,top: 5),
                                   child: Text("(Aadhar registered Mobile Number Preferable)",style: TextStyle(fontSize: 10),),
                                 ),
 
@@ -153,11 +142,11 @@ class _NewClientAddState extends State<NewClientAdd> {
                                                   child: Text("OTP",style: TextStyle(fontWeight: FontWeight.bold)),
                                                 )),
                                             OTPTextField(
-                                              margin: EdgeInsets.symmetric(horizontal: 1),
+                                              margin: EdgeInsets.symmetric(horizontal: 3),
                                               // contentPadding: ,
                                               length: 6,
                                               width: MediaQuery.of(context).size.width,
-                                              fieldWidth: twidth*0.1220,
+                                              fieldWidth: twidth*0.1035,
                                               style: TextStyle(
                                                   fontSize: bheight*0.03
                                               ),
@@ -168,7 +157,7 @@ class _NewClientAddState extends State<NewClientAdd> {
                                               },
                                             ),
                                             SizedBox(height: 1.h,),
-                                            Text("(Please enter verification code sent on your number)",style: TextStyle(fontSize: 10),textAlign: TextAlign.start,)
+                                            Text("(Please enter verification code sent on your number)",style: TextStyle(fontSize: 10),)
                                           ],
                                         ),
                                       ),
@@ -178,7 +167,7 @@ class _NewClientAddState extends State<NewClientAdd> {
 
                                 : Align(alignment: Alignment.centerRight,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(right: 20,top: 10,bottom: 10),
+                                      padding: const EdgeInsets.all(8.0),
                                       child: InkWell(onTap: () {
                                         visible=true;
                                         setState(() {});
@@ -190,11 +179,11 @@ class _NewClientAddState extends State<NewClientAdd> {
                                   paddingBottom: 20.0,
                                   paddingLeft: 20.0,
                                   paddingRight: 20.0,
-                                  text: 'Save & Next',
+                                  text: 'Search & Next',
                                   onPressed: () {
                                     myDiloag2(context, "assets/checklist.png", "Client Enrolment", "Branch",boxheight: 40,
                                             (){}, "Field", (){
-                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerifyMobileNo(),));
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UpdateMobile(),));
                                         });
                                   },
                                 ),

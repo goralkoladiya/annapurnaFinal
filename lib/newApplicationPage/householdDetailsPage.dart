@@ -323,116 +323,56 @@ class _HouseHoldDetailsPageState extends State<HouseHoldDetailsPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+              padding: const EdgeInsets.symmetric(vertical: defaultPadding,horizontal: defaultPadding),
               child: Container(
                 height: 40.h,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    TextButton(onPressed: () {
+                    Container(height: 52,
+                      margin: EdgeInsets.only(right: 1),
+                      width: 109.w,
+                      decoration: BoxDecoration(
+                          color: Color(0xFFEAEAEA),
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: TextButton(onPressed: () {
 
-                    }, child: Text("Basic details (Borrower)",style: myTextStyle100)),
-                    TextButton(onPressed: () {
+                      }, child: Text("Basic details (Borrower)",style: myTextStyle100)),
+                    ),
+                    Container(height: 52,
+                      margin: EdgeInsets.only(right: 1),
+                      width: 110.w,
+                      decoration: BoxDecoration(
+                          color: Color(0xFFEAEAEA),
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: TextButton(onPressed: () {
 
-                    }, child: Text("Earning member details",style: myTextStyle100)),
-                    TextButton(onPressed: () {
+                      }, child: Text("Earning member details",style: myTextStyle100)),
+                    ),
+                    Container(height: 52,
+                      width: 109.w,
+                      decoration: BoxDecoration(
+                          color: Color(0xFFEAEAEA),
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: TextButton(onPressed: () {
 
-                    }, child: Text("Household details",style: myTextStyle100,))
+                      }, child: Text("Household details",style: myTextStyle100)),
+                    ),
                   ],
                 ),
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: dropdown_widget(
-                    value: i,
-                    name: Strings.electricity1,
-                    onChanged: (p0) {
-                      setState(() {
-                        i=p0!;
-                      });
-                    },
-                    data: data,
-                  ),
-                ),
-                Expanded(child: ABTextInput(
-                  controller: customerIdController,
-                  autoValidator: AutovalidateMode.onUserInteraction,
-                  titleText: Strings.customerId,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter members';
-                    }return null;
-                  },
-                  hintText: "Enter ID",
-                ),),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: dropdown_widget(
-                    value: i,
-                    name: Strings.water,
-                    onChanged: (p0) {
-                      setState(() {
-                        i=p0!;
-                      });
-                    },
-                    data: data,
-                  ),
-                ),
-                Expanded(
-                  child: dropdown_widget(
-                    value: i,
-                    name: Strings.toilet,
-                    onChanged: (p0) {
-                      setState(() {
-                        i=p0!;
-                      });
-                    },
-                    data: data,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: dropdown_widget(
-                    value: i,
-                    name: Strings.land,
-                    onChanged: (p0) {
-                      setState(() {
-                        i=p0!;
-                      });
-                    },
-                    data: data,
-                  ),
-                ),
-                Expanded(
-                  child: dropdown_widget(
-                    value: i2,
-                    name: Strings.landUnit,
-                    onChanged: (p0) {
-                      setState(() {
-                        i2=p0!;
-                      });
-                    },
-                    data: data2,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 154.h),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
                     child: dropdown_widget(
                       value: i,
-                      name: Strings.sewage,
+                      name: Strings.electricity1,
                       onChanged: (p0) {
                         setState(() {
                           i=p0!;
@@ -441,44 +381,28 @@ class _HouseHoldDetailsPageState extends State<HouseHoldDetailsPage> {
                       data: data,
                     ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: dropdown_widget(
-                    value: i,
-                    name: Strings.lpg,
-                    onChanged: (p0) {
-                      setState(() {
-                        i=p0!;
-                      });
+                  Expanded(child: ABTextInput(
+                    controller: customerIdController,
+                    autoValidator: AutovalidateMode.onUserInteraction,
+                    titleText: Strings.customerId,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter members';
+                      }return null;
                     },
-                    data: data,
-                  ),
-                ),
-                Expanded(child: ABTextInput(
-                  controller: lpgCustomerIdController,
-                  autoValidator: AutovalidateMode.onUserInteraction,
-                  titleText: Strings.lpgCustomerId,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter ID';
-                    }return null;
-                  },
-                  hintText: "Enter ID",
-                ),),
-              ],
+                    hintText: "Enter ID",
+                  ),),
+                ],
+              ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 154.h),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
                     child: dropdown_widget(
                       value: i,
-                      name: Strings.livestock,
+                      name: Strings.water,
                       onChanged: (p0) {
                         setState(() {
                           i=p0!;
@@ -487,58 +411,10 @@ class _HouseHoldDetailsPageState extends State<HouseHoldDetailsPage> {
                       data: data,
                     ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: dropdown_widget(
-                    value: i3,
-                    name: Strings.typeOfLivestock,
-                    onChanged: (p0) {
-                      setState(() {
-                        i3=p0!;
-                      });
-                    },
-                    data: data3,
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(child: ABTextInput(
-                        controller: livestockCountController,
-                        autoValidator: AutovalidateMode.onUserInteraction,
-                        titleText: Strings.count,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter ID';
-                          }return null;
-                        },
-                        hintText: "Enter ID",
-                      ),),
-                      Padding(
-                        padding: const EdgeInsets.only(right: defaultPadding,top: defaultPadding),
-                        child: InkWell(
-                            onTap: () {
-
-                            },
-                            child: Icon(Icons.add_circle_outline,color: kPrimaryColor,)),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 154.h),
+                  Expanded(
                     child: dropdown_widget(
                       value: i,
-                      name: Strings.vehicle,
+                      name: Strings.toilet,
                       onChanged: (p0) {
                         setState(() {
                           i=p0!;
@@ -547,135 +423,70 @@ class _HouseHoldDetailsPageState extends State<HouseHoldDetailsPage> {
                       data: data,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: dropdown_widget(
-                    value: i3,
-                    name: Strings.typeOFVehicle,
-                    onChanged: (p0) {
-                      setState(() {
-                        i3=p0!;
-                      });
-                    },
-                    data: data3,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: dropdown_widget(
+                      value: i,
+                      name: Strings.land,
+                      onChanged: (p0) {
+                        setState(() {
+                          i=p0!;
+                        });
+                      },
+                      data: data,
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(child: ABTextInput(
-                        controller: vehicleCountController,
-                        autoValidator: AutovalidateMode.onUserInteraction,
-                        titleText: Strings.count,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter ID';
-                          }return null;
-                        },
-                        hintText: "Enter ID",
-                      ),),
-                      Padding(
-                        padding: const EdgeInsets.only(right: defaultPadding,top: defaultPadding),
-                        child: InkWell(
-                            onTap: () {
-
-                            },
-                            child: Icon(Icons.add_circle_outline,color: kPrimaryColor,)),
-                      )
-                    ],
+                  Expanded(
+                    child: dropdown_widget(
+                      value: i2,
+                      name: Strings.landUnit,
+                      onChanged: (p0) {
+                        setState(() {
+                          i2=p0!;
+                        });
+                      },
+                      data: data2,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: dropdown_widget(
-                    value: i3,
-                    name: Strings.typeOFVehicle,
-                    onChanged: (p0) {
-                      setState(() {
-                        i3=p0!;
-                      });
-                    },
-                    data: data3,
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(child: ABTextInput(
-                        controller: vehicleCount2Controller,
-                        autoValidator: AutovalidateMode.onUserInteraction,
-                        titleText: Strings.count,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter ID';
-                          }return null;
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 154.h),
+                      child: dropdown_widget(
+                        value: i,
+                        name: Strings.sewage,
+                        onChanged: (p0) {
+                          setState(() {
+                            i=p0!;
+                          });
                         },
-                        hintText: "Enter ID",
-                      ),),
-                      Padding(
-                        padding: const EdgeInsets.only(right: defaultPadding,top: defaultPadding),
-                        child: InkWell(
-                            onTap: () {
-
-                            },
-                            child: Icon(Icons.add_circle_outline,color: kPrimaryColor,)),
+                        data: data,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: defaultPadding,top: defaultPadding),
-                        child: InkWell(
-                            onTap: () {
-
-                            },
-                            child: Icon(Icons.delete,color: kPrimaryColor,)),
-                      )
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: dropdown_widget(
-                    value: i,
-                    name: Strings.furniture,
-                    onChanged: (p0) {
-                      setState(() {
-                        i=p0!;
-                      });
-                    },
-                    data: data,
-                  ),
-                ),
-                Expanded(
-                  child: dropdown_widget(
-                    value: i,
-                    name: Strings.smartPhone,
-                    onChanged: (p0) {
-                      setState(() {
-                        i=p0!;
-                      });
-                    },
-                    data: data,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 154.h),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
                     child: dropdown_widget(
                       value: i,
-                      name: Strings.electronicItems,
+                      name: Strings.lpg,
                       onChanged: (p0) {
                         setState(() {
                           i=p0!;
@@ -684,28 +495,310 @@ class _HouseHoldDetailsPageState extends State<HouseHoldDetailsPage> {
                       data: data,
                     ),
                   ),
-                ),
-              ],
+                  Expanded(child: ABTextInput(
+                    controller: lpgCustomerIdController,
+                    autoValidator: AutovalidateMode.onUserInteraction,
+                    titleText: Strings.lpgCustomerId,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter ID';
+                      }return null;
+                    },
+                    hintText: "Enter ID",
+                  ),),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 154.h),
+                      child: dropdown_widget(
+                        value: i,
+                        name: Strings.livestock,
+                        onChanged: (p0) {
+                          setState(() {
+                            i=p0!;
+                          });
+                        },
+                        data: data,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: dropdown_widget(
+                      value: i3,
+                      name: Strings.typeOfLivestock,
+                      onChanged: (p0) {
+                        setState(() {
+                          i3=p0!;
+                        });
+                      },
+                      data: data3,
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: ABTextInput(
+                          controller: livestockCountController,
+                          autoValidator: AutovalidateMode.onUserInteraction,
+                          titleText: Strings.count,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter ID';
+                            }return null;
+                          },
+                          hintText: "Enter ID",
+                        ),),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: defaultPadding,top: defaultPadding),
+                            child: InkWell(
+                                onTap: () {
+
+                                },
+                                child: Icon(Icons.add_circle_outline,color: kPrimaryColor,)),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: defaultPadding,top: defaultPadding),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 154.h),
+                      child: dropdown_widget(
+                        value: i,
+                        name: Strings.vehicle,
+                        onChanged: (p0) {
+                          setState(() {
+                            i=p0!;
+                          });
+                        },
+                        data: data,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: dropdown_widget(
+                      value: i3,
+                      name: Strings.typeOFVehicle,
+                      onChanged: (p0) {
+                        setState(() {
+                          i3=p0!;
+                        });
+                      },
+                      data: data3,
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: ABTextInput(
+                          controller: vehicleCountController,
+                          autoValidator: AutovalidateMode.onUserInteraction,
+                          titleText: Strings.count,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter ID';
+                            }return null;
+                          },
+                          hintText: "Enter ID",
+                        ),),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: defaultPadding,top: defaultPadding),
+                            child: InkWell(
+                                onTap: () {
+
+                                },
+                                child: Icon(Icons.add_circle_outline,color: kPrimaryColor,)),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: defaultPadding,top: defaultPadding),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: dropdown_widget(
+                      value: i3,
+                      name: Strings.typeOFVehicle,
+                      onChanged: (p0) {
+                        setState(() {
+                          i3=p0!;
+                        });
+                      },
+                      data: data3,
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: ABTextInput(
+                          controller: vehicleCount2Controller,
+                          autoValidator: AutovalidateMode.onUserInteraction,
+                          titleText: Strings.count,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter ID';
+                            }return null;
+                          },
+                          hintText: "Enter ID",
+                        ),),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: defaultPadding,top: defaultPadding),
+                            child: InkWell(
+                                onTap: () {
+
+                                },
+                                child: Icon(Icons.add_circle_outline,color: kPrimaryColor,)),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: defaultPadding,top: defaultPadding),
+                            child: InkWell(
+                                onTap: () {
+
+                                },
+                                child: Icon(Icons.delete,color: kPrimaryColor,)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: dropdown_widget(
+                      value: i,
+                      name: Strings.furniture,
+                      onChanged: (p0) {
+                        setState(() {
+                          i=p0!;
+                        });
+                      },
+                      data: data,
+                    ),
+                  ),
+                  Expanded(
+                    child: dropdown_widget(
+                      value: i,
+                      name: Strings.smartPhone,
+                      onChanged: (p0) {
+                        setState(() {
+                          i=p0!;
+                        });
+                      },
+                      data: data,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 154.h),
+                      child: dropdown_widget(
+                        value: i,
+                        name: Strings.electronicItems,
+                        onChanged: (p0) {
+                          setState(() {
+                            i=p0!;
+                          });
+                        },
+                        data: data,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 13.h,),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 40.h,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: kPrimaryColor
-                          ),
-                          onPressed: () {
-                          }, child: Text("Save & Next")),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 40.h,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: kPrimaryColor
+                            ),
+                            onPressed: () {
+                            }, child: Text("Save & Next")),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            )
+                ],
+              ),
+            ),
+            SizedBox(height: 10.h,)
           ],
         ),
       ),

@@ -47,7 +47,7 @@ class _AddClientState extends State<AddClient> with TickerProviderStateMixin {
         await showDialog(context: context, builder: (context) {
           return AlertDialog(
             content: SizedBox(
-              height: 180,
+              height: 200,
               child: Column(
                 children: [
                   Image(image: AssetImage("assets/Done.png")),
@@ -173,8 +173,7 @@ class _AddClientState extends State<AddClient> with TickerProviderStateMixin {
                       },),
                   ],
                 )
-                    : (index==0 ) ? Expanded(
-                              child: Column(
+                    : (index==0 ) ? Expanded(child: Column(
                                 children: [
                                   SizedBox(height: 3.h,),
                                   Text((tabIndex==1) ? "Capture Aadhaar Card" : "Please verify your ID", style: myTextStyle700.copyWith(fontSize: 20),),
@@ -434,9 +433,9 @@ class _VoterIDCardSectionState extends State<VoterIDCardSection> {
                       onPressed: () {
                         index = 1;
                         setState(() {});
-                        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                        //   return AddClient();
-                        // },));
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                          return AddClient();
+                        },));
                       },
                       child: Row(mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -505,6 +504,8 @@ class _EditVoterIDState extends State<EditVoterID> {
   TextEditingController pincode = TextEditingController();
   TextEditingController state = TextEditingController();
   TextEditingController year = TextEditingController();
+
+
 
   String? Gender;
   List gender = [
@@ -631,10 +632,8 @@ class _EditVoterIDState extends State<EditVoterID> {
                   SizedBox(height: 2.h,),
 
                   TextBtnWidget(name: "Update", onTap: () {
-                    myDiloag(context,done,"Voter ID Captured \n successfully","Initiate Voter OCR",(){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddClient(null,1),));
-                    });
-
+                    myDiloag(context,done,"Voter ID Captured \n successfully","Initiate Voter OCR",(){    });
+                              // Navigator.push(context, MaterialPageRoute(builder: (context) => AddClient(),));
 
                     //myDiloag2(context, done, "Voter Verification Failed", "Retry", (){}, "Skip", (){});
                   },)

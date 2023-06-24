@@ -84,18 +84,17 @@ class _UpdateMobileState extends State<UpdateMobile> {
                               autoValidator: AutovalidateMode.onUserInteraction,
                               titleText: 'New Mobile Number',
                               controller:  newMobile,
-                              hintText: '9897098977',
+                              hintText: '+91-9897098977',
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 5),
+                              padding: const EdgeInsets.only(left: 15,right: 20,bottom: 20,top: 5),
                               child: Text("(Aadhar registered Mobile Number Preferable)",style: TextStyle(fontSize: 10),),
                             ),
-
                             ABTextInput(
                               autoValidator: AutovalidateMode.onUserInteraction,
-                              titleText: 'Confirm Mobile Number',
+                              titleText: 'Confirm New Mobile Number',
                               controller:  confirmMobile,
-                              hintText: '9897098977',
+                              hintText: '+91-9897098977',
                             ),
                             
                              Row(mainAxisAlignment: MainAxisAlignment.end,
@@ -116,23 +115,26 @@ class _UpdateMobileState extends State<UpdateMobile> {
                                 children: [
                                   const Align(alignment: Alignment.centerLeft,
                                       child: Padding(
-                                        padding: EdgeInsets.only(left: 12,bottom: 5),
+                                        padding: EdgeInsets.only(left: 0,bottom: 5),
                                         child: Text("OTP",style: TextStyle(fontWeight: FontWeight.bold)),
                                       )),
-                                  OTPTextField(
-                                    margin: EdgeInsets.symmetric(horizontal: 3),
-                                    // contentPadding: ,
-                                    length: 6,
-                                    width: MediaQuery.of(context).size.width,
-                                    fieldWidth: twidth*0.1035,
-                                    style: TextStyle(
-                                        fontSize: bheight*0.03
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: OTPTextField(
+                                      margin: EdgeInsets.symmetric(horizontal: 1),
+                                      // contentPadding: ,
+                                      length: 6,
+                                      width: MediaQuery.of(context).size.width,
+                                      fieldWidth: twidth*0.1240,
+                                      style: TextStyle(
+                                          fontSize: bheight*0.03
+                                      ),
+                                      textFieldAlignment: MainAxisAlignment.center,
+                                      fieldStyle: FieldStyle.box,
+                                      onCompleted: (pin) {
+                                        print("Completed: " + pin);
+                                      },
                                     ),
-                                    textFieldAlignment: MainAxisAlignment.center,
-                                    fieldStyle: FieldStyle.box,
-                                    onCompleted: (pin) {
-                                      print("Completed: " + pin);
-                                    },
                                   ),
                                 ],
                               ),
@@ -141,11 +143,11 @@ class _UpdateMobileState extends State<UpdateMobile> {
                             ABButton(
                               paddingTop: 10,
                               paddingBottom: 0.0,
-                              paddingLeft: 20.0,
-                              paddingRight: 20.0,
+                              paddingLeft: 15.0,
+                              paddingRight: 15.0,
                               text: 'Update',
                               onPressed: () {
-                                myDiloag(context, "assets/Done.png", "Mobile Number updated Successfully",boxheight: 35,
+                                myDiloag(context, "assets/Done.png", "Mobile Number Updated Successfully",boxheight: 35,
                                     "Okay", (){
                                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerifyMobileNo(),));
                                     });
@@ -155,8 +157,8 @@ class _UpdateMobileState extends State<UpdateMobile> {
                             ABButton(
                               paddingTop: 10,
                               paddingBottom: 20.0,
-                              paddingLeft: 20.0,textColor: kPrimaryColor,
-                              paddingRight: 20.0,btnColor: Colors.white,
+                              paddingLeft: 15.0,textColor: kPrimaryColor,
+                              paddingRight: 15.0,btnColor: Colors.white,
                               text: 'Cancel',
                               onPressed: () {
                                 // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ClientFound(),));

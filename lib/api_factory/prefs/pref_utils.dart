@@ -46,6 +46,16 @@ class PrefUtils {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.setString(PrefKeys.OTP, OTP);
   }
+
+  static setVoterID(String VoterID) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.setString(PrefKeys.VoterID, VoterID);
+  }
+  static Future<String?> getVoterID() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(PrefKeys.VoterID);
+  }
+
   static Future<String?> getOTP() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(PrefKeys.OTP);

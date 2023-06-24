@@ -311,11 +311,20 @@ class _LoanProcessingState extends State<LoanProcessing> {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 2.h,),
-              dropdown_widget(name: "Select Product",value: product,data: Product,hint: "Select Product",
-                  onChanged: (p0) {
-                    product = p0;
-                    setState(() {});
-                  },),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              //   child: dropdown_widget(hint: "Select",
+              //     name: "Choose Search Type",value: Product,data: product,
+              //     onChanged: (p0) {
+              //       Product = p0;
+              //       setState(() {});
+              //     },),
+              // ),
+              // dropdown_widget(name: "Select Product",value: product,data: Product,hint: "Select Product",
+              //     onChanged: (p0) {
+              //       product = p0;
+              //       setState(() {});
+              //     },),
               Card(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
                 elevation: 5,
                 shadowColor: Colors.black,

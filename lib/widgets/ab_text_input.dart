@@ -12,8 +12,8 @@ class ABTextInput extends StatelessWidget {
       prefixText,
       suffixText;
   final Widget? prefix, suffix;
-  final int? maxLength;
   final Color? iserror;
+  final int? maxLength;
   final int? minLength;
   final Function()? onTap;
   final bool? isPassword, countryCodeEnabled, isEnabled;
@@ -34,6 +34,7 @@ class ABTextInput extends StatelessWidget {
   const ABTextInput(
       {Key? key,
       this.controller,
+        this.iserror,
       this.validationMsg,
       this.validator,
       this.autoValidator,
@@ -42,7 +43,6 @@ class ABTextInput extends StatelessWidget {
       this.prefixText,
       this.prefix,
       this.labelText,
-      this.iserror,
       this.titleText,
       this.hintText,
       this.suffix,

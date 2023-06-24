@@ -38,7 +38,7 @@ class DioFactory {
   DioFactory._instance() {
     _dio = Dio(
       BaseOptions(
-       // baseUrl: ApiEnvironment.UAT.endpoint!,
+        //baseUrl: ApiEnvironment.UAT.endpoint!,
         baseUrl: ApiEnvironment.Prod.endpoint!,
         headers: {
           // HttpHeaders.userAgentHeader: _deviceName,
@@ -77,6 +77,7 @@ class DioFactory {
   }
   static void initFCMToken(String token) {
     var _token = token;
+
     dio!.options.headers["device_id"] = _token;
   }
 

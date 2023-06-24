@@ -318,15 +318,38 @@ class _EarningMemberDetailsPageState extends State<EarningMemberDetailsPage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  TextButton(onPressed: () {
+                  Container(height: 52,
+                    margin: EdgeInsets.only(right: 1),
+                    width: 109.w,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFEAEAEA),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: TextButton(onPressed: () {
 
-                  }, child: Text("Basic details (Borrower)",style: myTextStyle100)),
-                  TextButton(onPressed: () {
+                    }, child: Text("Basic details (Borrower)",style: myTextStyle100)),
+                  ),
+                  Container(height: 52,
+                    margin: EdgeInsets.only(right: 1),
+                    width: 110.w,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFEAEAEA),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: TextButton(onPressed: () {
 
-                  }, child: Text("Earning member details",style: myTextStyle100)),
-                  TextButton(onPressed: () {
+                    }, child: Text("Earning member details",style: myTextStyle100)),
+                  ),
+                  Container(height: 52,
+                    width: 109.w,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFEAEAEA),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: TextButton(onPressed: () {
 
-                  }, child: Text("Household details",style: myTextStyle100,))
+                    }, child: Text("Household details",style: myTextStyle100)),
+                  ),
                 ],
               ),
             ),
@@ -347,18 +370,21 @@ class _EarningMemberDetailsPageState extends State<EarningMemberDetailsPage> {
                   ],
                 ),
                 Spacer(),
-                OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.all(4.h),
-                      side: BorderSide(color: red)
-                    ),
-                    onPressed: () {
-                          myDiloag23(context, 'assets/alert.png', "Are You Sure Want To Remove Earning Member Name?", "Yes", (){
-                            Navigator.pop(context);
-                          }, "Cancel", (){
-                            Navigator.pop(context);
-                          });
-                }, child: Text("X Remove Earning Member",style: TextStyle(color:red,fontSize: 7.h),))
+                Padding(
+                  padding: const EdgeInsets.only(),
+                  child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.all(4.h),
+                        side: BorderSide(color: red)
+                      ),
+                      onPressed: () {
+                            myDiloag23(context, 'assets/alert.png', "Are You Sure Want To Remove Earning Member Name?", "Yes", (){
+                              Navigator.pop(context);
+                            }, "Cancel", (){
+                              Navigator.pop(context);
+                            });
+                  }, child: Text("X Remove Earning Member",style: TextStyle(color:red,fontSize: 7.h),)),
+                )
               ],
             ),
           ),
@@ -366,21 +392,24 @@ class _EarningMemberDetailsPageState extends State<EarningMemberDetailsPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Spouse",style: myTextStyle100,),
                     Text("Lata Kumari",style: myTextStyle500,)
                   ],
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Father",style: myTextStyle100,),
                     Text("Sandeep Sharma",style: myTextStyle500,)
                   ],
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Mobile Number",style: myTextStyle100,),
                     Text("+91-9897098970",style: myTextStyle500,)
@@ -393,21 +422,24 @@ class _EarningMemberDetailsPageState extends State<EarningMemberDetailsPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("POI KYC Type",style: myTextStyle100,),
                     Text("Voter ID",style: myTextStyle500,)
                   ],
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("POI KYC ID",style: myTextStyle100,),
                     Text("123456789",style: myTextStyle500,)
                   ],
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("KYC Images",style: myTextStyle100,),
                     Row(
@@ -424,7 +456,7 @@ class _EarningMemberDetailsPageState extends State<EarningMemberDetailsPage> {
           SizedBox(height: defaultPadding*2,),
           Text("Images Data",style: myTextStyle700,),
           SizedBox(height: 1.5.h,),
-          Text("Click on the thumbnail for full images preview",style: myTextStyle600,),
+          Text("Click on the thumbnail for full image preview",style: myTextStyle600,),
           SizedBox(height: defaultPadding,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

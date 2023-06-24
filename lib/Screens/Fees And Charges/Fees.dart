@@ -42,8 +42,8 @@ class _FeesChargesState extends State<FeesCharges> {
   String ? product;
   List Product = [
     "CDL",
-    "CDL",
-    "CDL",
+    "CDL1",
+    "CDL2",
   ];
   @override
   Widget build(BuildContext context) {
