@@ -24,6 +24,7 @@ import '../../components/dialog.dart';
 class AuthenticationViewModel extends ChangeNotifier {
   User? user;
   bool loginresult=true;
+  List list=[];
   void loginAPI({
     required BuildContext context,
     required String userName,
@@ -285,7 +286,8 @@ class AuthenticationViewModel extends ChangeNotifier {
           print(response);
           showSuccessSnackbar(response['message'], context);
 
-          // List list = response;
+          list = response['FaqReqData'];
+          print("List : $list");
           // Navigator.pushReplacement(
           //     context,
           //     MaterialPageRoute(

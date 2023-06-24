@@ -61,7 +61,7 @@ class _helpPageState extends ConsumerState<helpPage> {
                         ),
                       ),
                     ],
-                  ),
+                  )
                 ),
               ],
             ),

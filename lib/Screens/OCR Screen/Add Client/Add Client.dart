@@ -18,6 +18,7 @@ import 'CaptureImage.dart';
 
 int index=0;
 int selectedIndex=0;
+int tabIndex=0;
 
 class AddClient extends StatefulWidget {
   XFile? image;
@@ -65,7 +66,7 @@ class _AddClientState extends State<AddClient> with TickerProviderStateMixin {
     }
   }
   TabController? tabcontroller ;
-  int tabIndex=0;
+
 
   @override
   void initState() {
@@ -456,6 +457,7 @@ class _VoterIDCardSectionState extends State<VoterIDCardSection> {
                         WidgetsBinding.instance.addPostFrameCallback((_) async {
                           await myDiloag(
                               context, done, "Voter ID Captured Successfully", "Okay", () {
+                                tabIndex=1;
                             Navigator.pop(context);
                           });
                         });

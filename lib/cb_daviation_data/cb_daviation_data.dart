@@ -1,6 +1,7 @@
+import 'package:annapurna225/components/dialog.dart';
 import 'package:annapurna225/components/dropdown_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
 
 import '../AppImages.dart';
 import '../components/TextBtnWidget.dart';
@@ -295,7 +296,7 @@ class _cb_daviationState extends State<cb_daviation> {
                         "All CB Data",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       )),
-
+                  SizedBox(height: 5,),
                   Container(
                     height: 170,margin: EdgeInsets.all(10),padding: EdgeInsets.all(defaultPadding),
                     decoration: BoxDecoration(
@@ -362,7 +363,50 @@ class _cb_daviationState extends State<cb_daviation> {
                             ),
                             Expanded(
                               child: InkWell(onTap: () {
+                                showDialog(context: context, builder: (context) {
+                                  return AlertDialog(
+                                    content: SizedBox(
+                                      height: 35.h,width: 100.h,
+                                      child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text("Please Enter Reason of Raising Request",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.center),
+                                          SizedBox(height: 2.h,),
+                                          Container(
+                                            padding: EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: kPrimaryColor),
+                                              borderRadius: BorderRadius.circular(5)
+                                            ),
+                                            child: TextField(
+                                              maxLines: 3,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "Add Remark",hintStyle: TextStyle(color: Colors.grey)
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 1.h,),
+                                          TextBtnWidget(name: "Submit", onTap: (){
 
+                                            myDiloag2(context, AppImages.alert, "Are You Sure To Reject Rajesh Kumar", "Yes!Reject", (){
+                                              Navigator.pop(context);
+                                              myDiloag(context, AppImages.done, "Rajesh Kumar Rejected Successfully", "Okay", (){
+                                                Navigator.pop(context);
+                                                Navigator.pop(context);
+                                              },boxheight: 35,imgsize: 120);
+                                            },
+                                                "Cancel", (){Navigator.pop(context);},boxheight: 39);
+                                          },),
+                                          SizedBox(height: 1.h,),
+                                          TextBtnWidget(name: "Cancel", onTap: (){
+                                            Navigator.pop(context);
+                                          },
+                                              btnColor: Colors.white,borderColor: kPrimaryColor,nameColor: kPrimaryColor,textColor: kPrimaryColor),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
                               },
                                 child: Container(margin: EdgeInsets.all(2),
                                   padding: EdgeInsets.all(10),alignment: Alignment.center,

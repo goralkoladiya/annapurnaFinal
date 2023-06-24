@@ -16,4 +16,5 @@ class AppImages{
   static const String help = "$basePath/help.png";
   static const String change = "$basePath/change.png";
   static const String done = "assets/Done.png";
+  static const String alert = "assets/alert.png";
 }
